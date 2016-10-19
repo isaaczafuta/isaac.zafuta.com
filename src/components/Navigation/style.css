@@ -1,0 +1,43 @@
+.Navigation {
+  margin: 10px;
+}
+
+.Navigation .width-container {
+  border-radius: 3px;
+  box-shadow: 0 1px 2px var(--light-gray);
+  background-color: var(--blue);
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: 1170px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Navigation a {
+  line-height: 60px;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0 15px;
+  color: var(--lighter-gray);
+}
+
+.Navigation a:hover {
+  text-decoration: none;
+  background-color: var(--dark-blue);
+  color: var(--white);
+}
+
+.Navigation ul {
+  display: inline-block;
+  margin: 0;
+}
+
+.Navigation ul > li {
+  display: inline-block;
+}
+
+.Navigation .brand {
+  display: inline-block;
+  font-size: 24px;
+}
