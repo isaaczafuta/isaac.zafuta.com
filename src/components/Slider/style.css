@@ -1,0 +1,27 @@
+.Slider {
+  position: relative;
+  padding: 5px 0;
+}
+
+.Slider .track {
+  background-color: var(--blue);
+  height: 10px;
+  border-radius: 5px;
+}
+
+.Slider .handle-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  margin: 0 20px 0 0;
+}
+
+.Slider .handle {
+  background-color: var(--dark-blue);
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+}
