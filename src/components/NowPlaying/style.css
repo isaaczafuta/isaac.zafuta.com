@@ -1,0 +1,44 @@
+.NowPlaying {
+  border: 1px solid var(--blue);
+}
+
+.NowPlaying .top {
+  background-color: var(--white);
+}
+
+.NowPlaying .top .info {
+  line-height: 1.5;
+  padding: 10px;
+}
+
+.NowPlaying .top .info p {
+  text-align: center;
+  margin: 0;
+}
+
+.NowPlaying .top .info .artist {
+  font-size: 18px;
+  color: var(--gray);
+}
+
+.NowPlaying .top .info .track {
+  font-size: 18px;
+  font-weight: light;
+  color: var(--gray);
+}
+
+.NowPlaying .bottom {
+  background-color: var(--lightest-gray);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16px;
+}
+
+.NowPlaying .bottom .menu-icon {
+  margin: 20px;
+}
+
+.NowPlaying .bottom .slider-container {
+  flex-grow: 1;
+}
