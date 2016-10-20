@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
 import FontAwesome from 'react-fontawesome';
 
 import Slider from '../Slider';
@@ -13,33 +14,52 @@ class NowPlaying extends Component {
     duration: PropTypes.number.isRequired,
     onSeek: PropTypes.func.isRequired,
   }
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      menuOpen: false
+    }
+  }
   render() {
     const sliderValue = this.props.currentTime / this.props.duration;
     const [formattedCurrentTime, formattedRemainingTime] = this.formatTimes(this.props.currentTime, this.props.duration);
 
+    const menuClasses = classNames({
+      'icon': true,
+      'active': this.state.menuOpen
+    });
+
     return (
       <div className="NowPlaying">
         <div className="top">
-          <div className="icon active">
-            <FontAwesome name='bars' size="2x" />
+          <div className={menuClasses}>
+            <FontAwesome name='bars'
+                         size="2x"
+                         onClick={this.handleMenuClicked}/>
           </div>
           <div className="info">
             <p className="artist">{this.props.artist}</p>
             <p className="track">{this.props.track}</p>
           </div>
           <div className="icon">
-            <FontAwesome name='retweet' size="2x" />
+            <FontAwesome name='retweet'
+                         size="2x" />
           </div>
         </div>
         <div className="bottom">
-          <span className="menu-icon">{formattedCurrentTime}</span>
+          <span className="time-label">{formattedCurrentTime}</span>
           <div className="slider-container">
             <Slider value={sliderValue} onValueChanged={this.handleValueChanged} />
           </div>
-          <span className="menu-icon">-{formattedRemainingTime}</span>
+          <span className="time-label">-{formattedRemainingTime}</span>
         </div>
       </div>
     );
+  }
+  handleMenuClicked = () => {
+    this.setState({
+      menuOpen: !this.state.menuOpen
+    });
   }
   handleValueChanged = (newValue) => {
     this.props.onSeek(newValue * this.props.duration);
