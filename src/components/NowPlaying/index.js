@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import FontAwesome from 'react-fontawesome';
 
 import Slider from '../Slider';
 
@@ -19,12 +20,16 @@ class NowPlaying extends Component {
     return (
       <div className="NowPlaying">
         <div className="top">
-          <div className="menu-icon" />
+          <div className="icon active">
+            <FontAwesome name='bars' size="2x" />
+          </div>
           <div className="info">
             <p className="artist">{this.props.artist}</p>
             <p className="track">{this.props.track}</p>
           </div>
-          <div className="repeat-icon" />
+          <div className="icon">
+            <FontAwesome name='retweet' size="2x" />
+          </div>
         </div>
         <div className="bottom">
           <span className="menu-icon">{formattedCurrentTime}</span>

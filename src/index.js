@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import Routes from './routes';
 
 import 'normalize.css/normalize.css';
+import 'font-awesome/css/font-awesome.css';
 
 import './style.css'
 
