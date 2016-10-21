@@ -9,7 +9,7 @@ import Writing from './pages/Writing';
 const Routes = (props) => (
   <Router {...props}>
     <Route path="/" component={Homepage} />
-    <Route path="/about" component={About} />    
+    <Route path="/about" component={About} />
     <Route path="/code" component={Code} />
     <Route path="/writing" component={Writing} />
   </Router>

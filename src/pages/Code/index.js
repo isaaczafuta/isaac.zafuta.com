@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Body from "../../components/Body";
-import Navigation from "../../components/Navigation";
-import Page from "../../components/Page";
+
+import Body from "../../components/layout/Body";
+import Navigation from "../../components/layout/Navigation";
+import Page from "../../components/layout/Page";
+
 import ProjectOverview from '../../components/ProjectOverview';
 
 import './style.css';
