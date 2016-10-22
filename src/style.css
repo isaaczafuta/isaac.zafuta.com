@@ -17,23 +17,11 @@
   --dark-red:         #CB171E;
 }
 
-html {
+body {
   color: var(--dark-gray);
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.846;
-  height: 100%;
-}
-
-body {
-  flex-direction: column;
-  display: flex;
-  height: 100%;
-}
-
-#root {
-  width: 100%;
-  height: 100%;
 }
 
 a {
