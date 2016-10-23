@@ -28,8 +28,24 @@
   color: var(--white);
 }
 
+.Navigation .brand {
+  white-space: nowrap;
+  font-size: 24px;
+}
+
+@media (max-width: 600px) {
+  .Navigation .brand {
+    display: none;
+  }
+
+  .Navigation ul {
+    padding: 0;
+  }
+}
+
 .Navigation ul {
-  display: inline-block;
+  flex: 1;
+  display: flex;
   margin: 0;
 }
 
@@ -37,7 +53,7 @@
   display: inline-block;
 }
 
-.Navigation .brand {
-  display: inline-block;
-  font-size: 24px;
+.Navigation ul > li.right {
+  flex: 1;
+  text-align: right;
 }

@@ -16,7 +16,7 @@ class Button extends Component {
   );
 
     return (
-      <a href="#"
+      <a href='#'
          className={buttonClasses}
          onClick={this.handleClick}>
          {this.props.text}
