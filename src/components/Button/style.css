@@ -1,0 +1,52 @@
+a.Button {
+  color: var(--white);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 6px 15px;
+  box-shadow: 0 1px 2px var(--light-gray);
+}
+
+a.Button:hover {
+  color: var(--white);
+}
+
+a.Button.primary {
+  background-color: var(--blue);
+}
+
+a.Button.primary:hover {
+  background-color: var(--dark-blue);
+}
+
+a.Button.success {
+  background-color: var(--green);
+}
+
+a.Button.success:hover {
+  background-color: var(--dark-green);
+}
+
+a.Button.info {
+  background-color: var(--purple);
+}
+
+a.Button.info:hover {
+  background-color: var(--dark-purple);
+}
+
+a.Button.warning {
+  background-color: var(--orange);
+}
+
+a.Button.warning:hover {
+  background-color: var(--dark-orange);
+}
+
+a.Button.danger {
+  background-color: var(--red);
+}
+
+a.Button.danger:hover {
+  background-color: var(--dark-red);
+}
