@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, Route } from 'react-router';
 
 import About from './pages/About';
+import Budget from './pages/Budget';
 import Code from './pages/Code';
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
@@ -14,6 +15,7 @@ const Routes = (props) => (
     <Route path='/code' component={Code} />
     <Route path='/login' component={Login} />
     <Route path='/writing' component={Writing} />
+    <Route path='/budget' component={Budget} />
   </Router>
 );
 

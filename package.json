@@ -2,6 +2,7 @@
   "name": "isaac.zafuta.com",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:9000",
   "devDependencies": {
     "react-scripts": "0.6.1"
   },
