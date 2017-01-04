@@ -29,7 +29,7 @@ class Budget extends Component {
 
     if (this.state.expenses.length > 0) {
       const expenses = this.state.expenses.map((expense) => expense.amount);
-      const numDays = moment().diff(moment("20161118", "YYYYMMDD"), 'days');
+      const numDays = moment().diff(moment("20161231", "YYYYMMDD"), 'days');
       const remainder = (3000 * numDays) - expenses.reduce((a, b) => a + b, 0);
 
       remaining = (
