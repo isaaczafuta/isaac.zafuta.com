@@ -13,8 +13,9 @@ class Budget extends Component {
     super(props, context);
     this.state = {
       amount: '',
+      notes: '',
       expenses: []
-    }
+    };
 
     fetch('/api/expenses')
     .then((r) => r.json())
@@ -25,20 +26,11 @@ class Budget extends Component {
   }
 
   render = () => {
-    let remaining = null;
+    const sortedExpenses = this.state.expenses.sort((a, b) => a.timestamp - b.timestamp);
 
-    if (this.state.expenses.length > 0) {
-      const expenses = this.state.expenses.map((expense) => expense.amount);
-      const numDays = moment().diff(moment("20161231", "YYYYMMDD"), 'days');
-      const remainder = (3000 * numDays) - expenses.reduce((a, b) => a + b, 0);
-
-      remaining = (
-        <div>
-          Remaining: ${Number(remainder/100).toFixed(2)}
-        </div>
-      )
-
-    }
+    const numDays = moment().diff(moment("20170502", "YYYYMMDD"), 'days');
+    const amounts = this.state.expenses.map((expense) => expense.amount);
+    let remainder = (3000 * numDays) - amounts.reduce(((a, b) => a + b), 0);
 
     return (
       <Page>
@@ -46,17 +38,24 @@ class Budget extends Component {
         <Body>
           <div className="Budget">
             <input type="text"
+                   placeholder="amount"
                    value={this.state.amount}
                    onChange={(e) => this.setState({amount: e.target.value})} />
+            <input type="text"
+                   placeholder="notes"
+                   value={this.state.notes}
+                   onChange={(e) => this.setState({notes: e.target.value})} />
             <button onClick={this.handleClick}>Submit</button>
-            {remaining}
+            <div>
+              Remaining: ${Number(remainder / 100).toFixed(2)}
+            </div>
             <table>
               <tbody>
-                {this.state.expenses.map((expense) => {
+                {sortedExpenses.map((expense) => {
                   return (
                   <tr key={expense.id}>
                     <td>{expense.timestamp}</td>
-                    <td>${expense.amount / 100}</td>
+                    <td>${Number(expense.amount / 100).toFixed(2)}</td>
                     <td>{expense.notes}</td>
                   </tr>
                   );
@@ -67,13 +66,13 @@ class Budget extends Component {
         </Body>
       </Page>
     );
-  }
+  };
 
   handleClick = () => {
-    var formData = new FormData();
+    const formData = new FormData();
 
     formData.append('amount', this.state.amount);
-    formData.append('notes', 'hi');
+    formData.append('notes', this.state.notes);
 
     fetch('/api/expenses', {
       method: 'put',
