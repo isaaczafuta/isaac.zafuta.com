@@ -20,14 +20,13 @@ class Budget extends Component {
     fetch('/api/expenses')
     .then((r) => r.json())
     .then((json) => {
+      json.data.sort((a, b) => a.timestamp.localeCompare(b.timestamp));
       this.setState({expenses: json.data});
     });
 
   }
 
   render = () => {
-    const sortedExpenses = this.state.expenses.sort((a, b) => a.timestamp - b.timestamp);
-
     const numDays = moment().diff(moment("20170502", "YYYYMMDD"), 'days');
     const amounts = this.state.expenses.map((expense) => expense.amount);
     let remainder = (3000 * numDays) - amounts.reduce(((a, b) => a + b), 0);
@@ -51,7 +50,7 @@ class Budget extends Component {
             </div>
             <table>
               <tbody>
-                {sortedExpenses.map((expense) => {
+                {this.state.expenses.map((expense) => {
                   return (
                   <tr key={expense.id}>
                     <td>{expense.timestamp}</td>
