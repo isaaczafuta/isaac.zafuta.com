@@ -29,7 +29,9 @@ class Budget extends Component {
   render = () => {
     const numDays = moment().diff(moment("20170502", "YYYYMMDD"), 'days');
     const amounts = this.state.expenses.map((expense) => expense.amount);
-    let remainder = (3000 * numDays) - amounts.reduce(((a, b) => a + b), 0);
+    let remainder = (4000 * numDays) - amounts.reduce(((a, b) => a + 
+b), 
+0);
 
     return (
       <Page>
