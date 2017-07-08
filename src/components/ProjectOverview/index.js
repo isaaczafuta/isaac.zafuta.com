@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './style.css';
 
@@ -16,7 +17,7 @@ class ProjectOverview extends Component {
       <div className="ProjectOverview">
         <hr />
         <div className="container">
-          <img role="presentation" src={this.props.image} className="project-image" />
+          <img alt="" src={this.props.image} className="project-image" />
           <div className="project-info">
             <p className="title">
               <Link to={this.props.link}>{this.props.title}</Link></p>
