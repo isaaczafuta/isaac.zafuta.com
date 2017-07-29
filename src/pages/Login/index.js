@@ -3,14 +3,21 @@ import React, { Component } from 'react';
 import Navigation from '../../components/layout/Navigation';
 import Page from '../../components/layout/Page';
 
-import './style.css';
-
 class Login extends Component {
   render() {
     return (
       <Page>
         <Navigation/>
-        <h1>Login</h1>
+        <div className="container">
+          <h1 className="title has-text-centered">
+            Login
+            <div className="columns">
+              <div className="column is-one-third is-offset-one-third">
+                asd
+              </div>
+            </div>
+          </h1>
+        </div>
       </Page>
     );
   }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import Navigation from "../../components/layout/Navigation";
-import Page from "../../components/layout/Page";
+import Navigation from "../../components/layout/Navigation/index";
+import Page from "../../components/layout/Page/index";
 
-import ProjectOverview from '../../components/ProjectOverview';
+import ProjectOverview from '../../components/ProjectOverview/index';
 
 // import headphones from './headphones.svg';
 // import tag from './tag.svg';

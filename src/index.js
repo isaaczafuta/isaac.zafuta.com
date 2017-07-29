@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route} from 'react-router-dom';
 
 import Budget from './pages/Budget';
-import Code from './pages/Code';
+import Code from './pages/code';
+import PyDHT from './pages/code/PyDHT';
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
 
@@ -14,9 +15,10 @@ const router = (
 <BrowserRouter>
   <div>
     <Route exact path='/' component={Homepage} />
-    <Route path='/code' component={Code} />
-    <Route path='/login' component={Login} />
-    <Route path='/budget' component={Budget} />
+    <Route exact path='/code' component={Code} />
+    <Route exact path='/code/pydht' component={PyDHT} />
+    <Route exact path='/login' component={Login} />
+    <Route exact path='/budget' component={Budget} />
   </div>
 </BrowserRouter>);
 
