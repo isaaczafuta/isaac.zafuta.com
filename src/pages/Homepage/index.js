@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
 
-import Body from "../../components/layout/Body";
 import Navigation from "../../components/layout/Navigation";
 import Page from "../../components/layout/Page";
 
 import './style.css';
 
 class Homepage extends Component {
+
   render() {
     return (
       <Page>
         <Navigation/>
-        <Body>
-          <div className="Homepage">
-            <pre>{`Meticulous, yes. Methodical. Educated. They were these things.
-
-Nothing extreme. Like anyone, they varied. There were days of mistakes and laziness and infighting.
-And there were days, good days, when by anyone's judgment, they would have to be considered clever.
-
-They took from their surroundings what was needed, and made of it something more.`}</pre>
-          </div>
-        </Body>
+        {/*<section className="hero is-primary">*/}
+          {/*<div className="hero-body">*/}
+            {/*<div className="container">*/}
+              {/*<p className="title">Tux is the best cat</p>*/}
+              {/*<p className="subtitle">*/}
+                {/*I tell you, he is the <strong>best</strong> cat*/}
+              {/*</p>*/}
+            {/*</div>*/}
+          {/*</div>*/}
+        {/*</section>*/}
       </Page>
     );
   }
+
 }
 
 export default Homepage;

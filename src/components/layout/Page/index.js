@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
-import "./style.css";
-
 class Page extends Component {
   render() {
     return (
-      <div className="Page">{this.props.children}</div>
+      <div>{this.props.children}</div>  // TODO: Get rid of this with React 16
     );
   }
 }

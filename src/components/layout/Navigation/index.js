@@ -1,32 +1,93 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import './style.css';
 
 class Navigation extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      navbarBurgerOpen: false,
+    }
+  };
+
+  showMenu = (element) => {
+    this.setState({navbarBurgerOpen: !this.state.navbarBurgerOpen});
+  };
+
   render() {
     return (
-      <nav className='Navigation'>
-        <div className='width-container'>
-          <div className='brand'>
-            <Link to='/'>Isaac Zafuta</Link>
+      <div className="container">
+        <nav className="navbar">
+          <div className="navbar-brand">
+            <Link to="/" className="navbar-item">
+              Isaac Zafuta
+            </Link>
+            <a href="https://github.com/isaaczafuta" className="navbar-item is-hidden-desktop">
+              <span className="icon" style={{color: '#333'}}>
+                <i className="fa fa-github" />
+              </span>
+            </a>
+            <Link to="/login" className="navbar-item is-hidden-desktop">
+              <span className="icon" style={{color: '#333'}}>
+                <i className="fa fa-sign-in" />
+              </span>
+            </Link>
+            <div className={classNames('navbar-burger', 'burger', {'is-active': this.state.navbarBurgerOpen})}
+                 onClick={this.showMenu} >
+              <span/>
+              <span/>
+              <span/>
+            </div>
           </div>
-          <ul>
-            <li>
-              <Link to='/code'>Code</Link>
-            </li>
-            <li>
-              <Link to='/writing'>Writing</Link>
-            </li>
-            <li>
-              <Link to='/about'>About</Link>
-            </li>
-            <li className='right'>
-              <Link to='/login'>Sign In</Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
+
+          <div className={classNames('navbar-menu', {'is-active': this.state.navbarBurgerOpen})}>
+            <div className="navbar-start">
+              <Link to="/" className="navbar-item">Home</Link>
+              <Link to="/code" className="navbar-item">Code</Link>
+              <div className="navbar-item has-dropdown is-hoverable">
+                <Link to="/writing" className="navbar-link">
+                  Writing
+                </Link>
+                <div className="navbar-dropdown is-boxed">
+                  <Link to="/writing/arch-on-macbook-pro" className="navbar-item">
+                    <div className="navbar-content">
+                      <p>
+                        <small className="has-text-info">28 Jul 2017</small>
+                      </p>
+                      <p>Installing Arch on a MacBook</p>
+                    </div>
+                  </Link>
+                  <hr className="navbar-divider"/>
+                  <Link to="/writing" className="navbar-item">
+                    More posts
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="navbar-end">
+              <a href="https://github.com/isaaczafuta" className="navbar-item">
+                Github
+              </a>
+              <div className="navbar-item">
+                <div className="field is-grouped">
+                  <p className="control">
+                    <Link to='/login' className="button is-primary">
+                      <span className="icon">
+                        <i className="fa fa-sign-in"/>
+                      </span>
+                      <span>Sign In</span>
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
     );
   }
 }
