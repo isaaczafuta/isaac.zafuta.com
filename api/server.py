@@ -116,6 +116,21 @@ def update_expense(expense_id):
     })
 
 
+@api.route('/expense/<expense_id>', methods=['DELETE'])
+def delete_expense(expense_id):
+    expense = Expense.query.filter(Expense.id == expense_id).first()
+
+    if not expense:
+        return _not_found_response()
+
+    db.session.delete(expense)
+    db.session.commit()
+
+    return jsonify({
+        'status': 'success',
+    })
+
+
 app.register_blueprint(api, url_prefix='/api')
 
 

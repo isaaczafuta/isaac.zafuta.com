@@ -52,7 +52,7 @@ class ExpenseEditor extends Component {
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">Edit Expense</p>
-            <button className="delete" />
+            <button className="delete" onClick={() => this.props.onClose(false)} />
           </header>
           <section className="modal-card-body">
             <div className="field is-horizontal">
@@ -98,8 +98,61 @@ class ExpenseEditor extends Component {
           <footer className="modal-card-foot">
             <button className={classNames('button', 'is-primary', {'is-loading': this.state.submitting})}
                     onClick={() => this.saveChanges()}>Save changes</button>
-            <bottom className="button"
-                    onClick={() => this.props.onClose()}>Cancel</bottom>
+            <button className="button"
+                    onClick={() => this.props.onClose()}>Cancel</button>
+          </footer>
+        </div>
+      </div>
+    );
+  }
+
+}
+
+class ExpenseDeleter extends Component {
+  static propTypes = {
+    expense: PropTypes.object.isRequired,
+    onClose: PropTypes.func.isRequired,
+  };
+
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      submitting: false,
+    }
+  }
+
+  deleteExpense = () => {
+    this.setState({
+      submitting: true
+    });
+
+    const url = `/api/expense/${this.props.expense.id}`;
+    fetch(url, {
+      method: 'DELETE',
+    }).then((r) => {
+      this.props.onClose(true);
+    });
+
+  };
+
+  render = () => {
+    return (
+      <div className="modal is-active">
+        <div className="modal-background"/>
+        <div className="modal-card">
+          <header className="modal-card-head">
+            <p className="modal-card-title">Delete Expense</p>
+            <button className="delete" onClick={() => this.props.onClose(false)} />
+          </header>
+          <section className="modal-card-body">
+            <p>Are you sure you want to delete <b>{this.props.expense.notes}</b>?</p>
+          </section>
+          <footer className="modal-card-foot">
+            <button className={classNames('button', 'is-danger', {'is-loading': this.state.submitting})}
+                    onClick={() => this.deleteExpense()}>Delete</button>
+            <button className="button"
+                    onClick={() => this.props.onClose(false)}>Cancel</button>
           </footer>
         </div>
       </div>
@@ -188,6 +241,7 @@ class Budget extends Component {
       notificationDismissed: false,
       expenses: [],
       selectedExpense: null,
+      deletingExpense: null,
     };
 
     this.loadExpenses();
@@ -206,6 +260,17 @@ class Budget extends Component {
     this.setState({
       selectedExpense: null,
     });
+
+    if (changed) {
+      this.clearAndReloadExpenses();
+    }
+  };
+
+  closeExpenseDeleter = (changed) => {
+    this.setState({
+      deletingExpense: null,
+    });
+
     if (changed) {
       this.clearAndReloadExpenses();
     }
@@ -248,12 +313,21 @@ class Budget extends Component {
       );
     }
 
+    let expenseDeleter = null;
+    if (this.state.deletingExpense) {
+      expenseDeleter = (
+        <ExpenseDeleter expense={this.state.deletingExpense}
+                        onClose={(changed) => this.closeExpenseDeleter(changed)} />
+      );
+    }
+
     return (
       <Page>
         <Navigation/>
         <div className="container">
           <h1 className="title has-text-centered">Budget</h1>
           {expenseEditor}
+          {expenseDeleter}
           {notification}
 
           <ExpenseForm onSave={() => this.clearAndReloadExpenses()}/>
@@ -264,6 +338,7 @@ class Budget extends Component {
               <th>Amount</th>
               <th>Date</th>
               <th>Notes</th>
+              <th />
             </tr>
             </thead>
             <tbody>
@@ -273,6 +348,10 @@ class Budget extends Component {
                   <td>${Number(expense.amount / 100).toFixed(2)}</td>
                   <td>{moment(expense.timestamp).format('lll')}</td>
                   <td>{expense.notes}</td>
+                  <td>
+                    <button className="delete"
+                            onClick={(e) => {e.stopPropagation(); this.setState({deletingExpense: expense})}} />
+                  </td>
                 </tr>
               )
             })}
