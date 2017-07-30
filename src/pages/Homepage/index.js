@@ -9,7 +9,7 @@ class Homepage extends Component {
 
   render() {
     return (
-      <Page>
+      <Page title="Home">
         <Navigation/>
         {/*<section className="hero is-primary">*/}
           {/*<div className="hero-body">*/}

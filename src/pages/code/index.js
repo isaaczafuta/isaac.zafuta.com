@@ -39,7 +39,7 @@ class Code extends Component {
     const projects = []
 
     return (
-      <Page>
+      <Page title="Code">
         <Navigation/>
         <div className="Code">
           {/*<h1>Projects</h1>*/}

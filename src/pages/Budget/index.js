@@ -322,7 +322,7 @@ class Budget extends Component {
     }
 
     return (
-      <Page>
+      <Page title="Budget">
         <Navigation/>
         <div className="container">
           <h1 className="title has-text-centered">Budget</h1>

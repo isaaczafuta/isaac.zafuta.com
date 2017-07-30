@@ -7,7 +7,7 @@ class PyDHT extends Component {
 
   render() {
     return (
-      <Page>
+      <Page title="pydht">
         <Navigation/>
         <section className="hero is-primary">
           <div className="hero-body">
