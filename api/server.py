@@ -47,6 +47,12 @@ def _bad_parameters_response():
     }), 400
 
 
+def _not_found_response():
+    return jsonify({
+        'status': 'failure'
+    }), 404
+
+
 @api.route('/expenses', methods=['GET'])
 def get_expenses():
     expenses = Expense.query.all()
@@ -81,8 +87,33 @@ def create_expense():
 
         return jsonify({
             'status': 'success',
-            'data': [_expense_to_dict(expense)]
+            'data': _expense_to_dict(expense)
         })
+
+
+@api.route('/expense/<expense_id>', methods=['PATCH'])
+def update_expense(expense_id):
+    amount = request.form.get('amount')
+    notes = request.form.get('notes')
+
+    expense = Expense.query.filter(Expense.id == expense_id).first()
+
+    if not expense:
+        return _not_found_response()
+
+    if amount is not None:
+        expense.amount = amount
+    if notes is not None:
+        expense.notes = notes
+
+    if amount is not None or notes is not None:
+        db.session.add(expense)
+        db.session.commit()
+
+    return jsonify({
+        'status': 'success',
+        'data': _expense_to_dict(expense)
+    })
 
 
 app.register_blueprint(api, url_prefix='/api')

@@ -1,9 +1,112 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import Navigation from "../../components/layout/Navigation";
 import Page from "../../components/layout/Page";
+
+
+class ExpenseEditor extends Component {
+  static propTypes = {
+    expense: PropTypes.object.isRequired,
+    onClose: PropTypes.func.isRequired,
+  };
+
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      amount: this.props.expense.amount,
+      notes: this.props.expense.notes,
+      submitting: false,
+    }
+  }
+
+  saveChanges = () => {
+    if (this.state.amount === this.props.expense.amount && this.state.notes === this.props.expense.notes) {
+      this.props.onClose(false);
+    } else {
+      const formData = new FormData();
+      formData.append('amount', this.state.amount);
+      formData.append('notes', this.state.notes);
+
+      this.setState({
+        submitting:true
+      });
+
+      const url = `/api/expense/${this.props.expense.id}`;
+      fetch(url, {
+        method: 'PATCH',
+        body: formData
+      }).then((r) => {
+        this.props.onClose(true);
+      });
+    }
+  };
+
+  render = () => {
+    return (
+      <div className="modal is-active">
+        <div className="modal-background"/>
+        <div className="modal-card">
+          <header className="modal-card-head">
+            <p className="modal-card-title">Edit Expense</p>
+            <button className="delete" />
+          </header>
+          <section className="modal-card-body">
+            <div className="field is-horizontal">
+              <div className="field-label is-normal">
+                <label className="label">Amount</label>
+              </div>
+              <div className="field-body">
+                <div className="field is-expanded">
+                  <div className="field has-addons">
+                    <p className="control">
+                      <button className="button is-static">$</button>
+                    </p>
+                    <p className="control is-expanded">
+                      <input className="input"
+                             type="text"
+                             placeholder="Amount"
+                             value={this.state.amount}
+                             onChange={(e) => this.setState({amount: e.target.value})} />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="field is-horizontal">
+              <div className="field-label is-normal">
+                <label className="label">Notes</label>
+              </div>
+              <div className="field-body">
+                <div className="field is-expanded">
+                  <div className="field">
+                    <p className="control is-expanded">
+                      <input className="input"
+                             type="text"
+                             placeholder="Notes"
+                             value={this.state.notes}
+                             onChange={(e) => this.setState({notes: e.target.value})} />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <footer className="modal-card-foot">
+            <button className={classNames('button', 'is-primary', {'is-loading': this.state.submitting})}
+                    onClick={() => this.saveChanges()}>Save changes</button>
+            <bottom className="button"
+                    onClick={() => this.props.onClose()}>Cancel</bottom>
+          </footer>
+        </div>
+      </div>
+    );
+  }
+
+}
 
 class Budget extends Component {
 
@@ -24,17 +127,36 @@ class Budget extends Component {
         timestamp: moment.now(),
         amount: 65,
         notes: 'This is some shit',
-      }]
+      }],
+      selectedExpense: null,
     };
 
-    fetch('/api/expenses')
-    .then((r) => r.json())
-    .then((json) => {
-      json.data.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-      this.setState({expenses: json.data});
-    });
-
+    this.loadExpenses();
   }
+
+  loadExpenses = () => {
+    fetch('/api/expenses')
+      .then((r) => r.json())
+      .then((json) => {
+        json.data.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+        this.setState({expenses: json.data});
+      });
+  };
+
+  closeExpenseEditor = (changed) => {
+    const updatedState = {
+      selectedExpense: null,
+    };
+    if (changed) {
+      updatedState.expenses = [];
+    }
+
+    this.setState(updatedState);
+
+    if (changed) {
+      this.loadExpenses();
+    }
+  };
 
   render = () => {
     const numDays = moment().diff(moment("20170502", "YYYYMMDD"), 'days');
@@ -58,11 +180,20 @@ class Budget extends Component {
       );
     }
 
+    let expenseEditor = null;
+    if (this.state.selectedExpense) {
+      expenseEditor = (
+        <ExpenseEditor expense={this.state.selectedExpense}
+                       onClose={(changed) => this.closeExpenseEditor(changed)} />
+      );
+    }
+
     return (
       <Page>
         <Navigation/>
         <div className="container">
           <h1 className="title has-text-centered">Budget</h1>
+          {expenseEditor}
           {notification}
           <div className="field has-addons has-addons-centered">
             <p className="control">
@@ -102,7 +233,7 @@ class Budget extends Component {
             <tbody>
             {this.state.expenses.map(expense => {
               return (
-                <tr key={expense.id}>
+                <tr key={expense.id} onClick={() => this.setState({selectedExpense: expense})}>
                   <td>${Number(expense.amount / 100).toFixed(2)}</td>
                   <td>{moment(expense.timestamp).format('lll')}</td>
                   <td>{expense.notes}</td>
@@ -118,19 +249,24 @@ class Budget extends Component {
 
   handleClick = () => {
     const formData = new FormData();
-
     formData.append('amount', this.state.amount);
     formData.append('notes', this.state.notes);
 
     this.setState({
-      submitting:true
+      submitting: true
     });
 
     fetch('/api/expenses', {
       method: 'put',
       body: formData
     }).then((r) => {
-      window.location.reload();
+      this.setState({
+        amount: null,
+        notes: null,
+        submitting: false,
+        expenses: []
+      });
+      this.loadExpenses();
     })
   }
 }
