@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
+import CurrencyInput from '../../components/CurrencyInput';
 import Navigation from "../../components/layout/Navigation";
 import Page from "../../components/layout/Page";
 
@@ -66,11 +67,11 @@ class ExpenseEditor extends Component {
                       <button className="button is-static">$</button>
                     </p>
                     <p className="control is-expanded">
-                      <input className="input"
-                             type="text"
-                             placeholder="Amount"
-                             value={this.state.amount}
-                             onChange={(e) => this.setState({amount: e.target.value})} />
+                      <CurrencyInput className="input"
+                                     type="text"
+                                     placeholder="Amount"
+                                     value={this.state.amount}
+                                     onChange={(amount) => this.setState({amount: amount})} />
                     </p>
                   </div>
                 </div>
@@ -171,7 +172,7 @@ class ExpenseForm extends Component {
     super();
 
     this.state = {
-      amount: '',
+      amount: null,
       notes: '',
       submitting: false,
     }
@@ -182,13 +183,13 @@ class ExpenseForm extends Component {
     return (
       <div className="field has-addons has-addons-centered">
         <p className="control">
-          <input autoFocus
-                 tabIndex="1"
-                 className="input"
-                 type="text"
-                 placeholder="Amount"
-                 value={this.state.amount}
-                 onChange={(e) => this.setState({amount: e.target.value})} />
+          <CurrencyInput autoFocus
+                         tabIndex="1"
+                         className="input"
+                         type="text"
+                         placeholder="Amount"
+                         value={this.state.amount}
+                         onChange={(value) => this.setState({amount: value})} />
         </p>
         <p className="control">
           <input className="input"
@@ -223,7 +224,7 @@ class ExpenseForm extends Component {
       body: formData
     }).then((r) => {
       this.setState({
-        amount: '',
+        amount: null,
         notes: '',
         submitting: false,
       });

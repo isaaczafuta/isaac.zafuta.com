@@ -12,7 +12,7 @@ class Page extends Component {
     this.updateTitle(props.title);
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.updateTitle(nextProps.title);
   }
 
