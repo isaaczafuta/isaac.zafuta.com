@@ -32,7 +32,7 @@ class ExpenseEditor extends Component {
       formData.append('notes', this.state.notes);
 
       this.setState({
-        submitting:true
+        submitting: true
       });
 
       const url = `/api/expense/${this.props.expense.id}`;
@@ -108,26 +108,85 @@ class ExpenseEditor extends Component {
 
 }
 
+class ExpenseForm extends Component {
+
+  static propTypes = {
+    onSave: PropTypes.func.isRequired
+  };
+
+  constructor(props, context) {
+    super();
+
+    this.state = {
+      amount: '',
+      notes: '',
+      submitting: false,
+    }
+
+  }
+
+  render = () => {
+    return (
+      <div className="field has-addons has-addons-centered">
+        <p className="control">
+          <input autoFocus
+                 tabIndex="1"
+                 className="input"
+                 type="text"
+                 placeholder="Amount"
+                 value={this.state.amount}
+                 onChange={(e) => this.setState({amount: e.target.value})} />
+        </p>
+        <p className="control">
+          <input className="input"
+                 tabIndex="2"
+                 type="text"
+                 placeholder="Notes"
+                 value={this.state.notes}
+                 onChange={(e) => this.setState({notes: e.target.value})} />
+        </p>
+        <p className="control">
+          <button tabIndex="3"
+                  className={classNames('button', 'is-primary', {'is-loading': this.state.submitting})}
+                  onClick={this.saveExpense}>
+            Save
+          </button>
+        </p>
+      </div>
+    );
+  };
+
+  saveExpense = () => {
+    const formData = new FormData();
+    formData.append('amount', this.state.amount);
+    formData.append('notes', this.state.notes);
+
+    this.setState({
+      submitting: true
+    });
+
+    fetch('/api/expenses', {
+      method: 'put',
+      body: formData
+    }).then((r) => {
+      this.setState({
+        amount: '',
+        notes: '',
+        submitting: false,
+      });
+      this.props.onSave();
+    })
+  }
+
+}
+
 class Budget extends Component {
 
   constructor(props, context) {
     super(props, context);
     this.state = {
-      amount: '',
-      notes: '',
-      submitting: false,
       notificationDismissed: false,
-      expenses: [{
-        id: 1,
-        timestamp: moment.now(),
-        amount: 65,
-        notes: 'This is some shit',
-      },{
-        id: 2,
-        timestamp: moment.now(),
-        amount: 65,
-        notes: 'This is some shit',
-      }],
+      expenses: [],
       selectedExpense: null,
     };
 
@@ -144,18 +203,19 @@ class Budget extends Component {
   };
 
   closeExpenseEditor = (changed) => {
-    const updatedState = {
+    this.setState({
       selectedExpense: null,
-    };
+    });
     if (changed) {
-      updatedState.expenses = [];
+      this.clearAndReloadExpenses();
     }
+  };
 
-    this.setState(updatedState);
-
-    if (changed) {
-      this.loadExpenses();
-    }
+  clearAndReloadExpenses = () => {
+    this.setState({
+      expenses: [],
+    });
+    this.loadExpenses();
   };
 
   render = () => {
@@ -195,32 +255,8 @@ class Budget extends Component {
           <h1 className="title has-text-centered">Budget</h1>
           {expenseEditor}
           {notification}
-          <div className="field has-addons has-addons-centered">
-            <p className="control">
-              <input autoFocus
-                     tabIndex="1"
-                     className="input"
-                     type="text"
-                     placeholder="Amount"
-                     value={this.state.amount}
-                     onChange={(e) => this.setState({amount: e.target.value})} />
-            </p>
-            <p className="control">
-              <input className="input"
-                     tabIndex="2"
-                     type="text"
-                     placeholder="Notes"
-                     value={this.state.notes}
-                     onChange={(e) => this.setState({notes: e.target.value})} />
-            </p>
-            <p className="control">
-              <button tabIndex="3"
-                      className={classNames('button', 'is-primary', {'is-loading': this.state.submitting})}
-                      onClick={this.handleClick}>
-                Save
-              </button>
-            </p>
-          </div>
+
+          <ExpenseForm onSave={() => this.clearAndReloadExpenses()}/>
 
           <table className="table is-striped">
             <thead>
@@ -246,29 +282,6 @@ class Budget extends Component {
       </Page>
     );
   };
-
-  handleClick = () => {
-    const formData = new FormData();
-    formData.append('amount', this.state.amount);
-    formData.append('notes', this.state.notes);
-
-    this.setState({
-      submitting: true
-    });
-
-    fetch('/api/expenses', {
-      method: 'put',
-      body: formData
-    }).then((r) => {
-      this.setState({
-        amount: null,
-        notes: null,
-        submitting: false,
-        expenses: []
-      });
-      this.loadExpenses();
-    })
-  }
 }
 
 export default Budget;
