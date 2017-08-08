@@ -290,17 +290,15 @@ class Budget extends Component {
     const remainder = (6400 * numDays) - amounts.reduce(((a, b) => a + b), 0);
 
     let notification = null;
-    if (remainder < 0 && !this.state.notificationDismissed) {
+    if (this.state.expenses.length > 0 && remainder < 0) {
       notification = (
         <div className="notification is-danger has-text-centered">
-          <button className="delete" onClick={e => this.setState({notificationDismissed: true})} />
           Slow down there buddy! You're over budget by ${Number(-remainder / 100).toFixed(2)}!
         </div>
       );
-    } else if (!this.state.notificationDismissed) {
+    } else if (this.state.expenses.length > 0) {
       notification = (
         <div className="notification has-text-centered">
-          <button className="delete" onClick={e => this.setState({notificationDismissed: true})} />
           You have ${Number(remainder / 100).toFixed(2)} left to spend!
         </div>
       );
