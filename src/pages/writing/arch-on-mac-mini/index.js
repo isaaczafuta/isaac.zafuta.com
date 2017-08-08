@@ -10,26 +10,26 @@ class WritingArchOnAMacMini extends Component {
         return (
             <Page title="Installing Arch on a Mac Mini">
                 <Navigation/>
-                <div className="container">
-                    <section className="hero is-primary">
-                        <div className="hero-body">
-                            <div className="container">
-                                <h1 className="title">
-                                    Installing Arch on a Mac Mini
-                                </h1>
-                                <h2 className="subtitle">
-                                    Getting started with Arch Linux
-                                </h2>
-                            </div>
+                <section className="hero is-danger">
+                    <div className="hero-body">
+                        <div className="container">
+                            <h1 className="title">
+                                Installing Arch on a Mac Mini
+                            </h1>
+                            <h2 className="subtitle">
+                                Getting started with Arch Linux
+                            </h2>
                         </div>
-                    </section>
+                    </div>
+                </section>
+                <div className="container">
                     <section className="content">
                         <br/>
                         <h2>Installing Arch</h2>
-                        <p>Arch has some great stuff like <code>pacman</code> and the <a href="https://aur.archlinux.org/">AUR</a>, but getting it installed can be a bit tricky. The <a href="https://wiki.archlinux.org/">Arch Wiki</a> and <a href="https://wiki.archlinux.org/index.php/installation_guide">installation guide</a> are great, but there are a lot of options, and I always miss something and regret it later. Here's exactly what I do on my Late 2014 Mac Mini.</p>
+                        <p>Arch Linux has some great stuff like <code>pacman</code> and the <a href="https://aur.archlinux.org/">AUR</a>, but getting it installed can be a bit tricky. The <a href="https://wiki.archlinux.org/">Arch Wiki</a> and <a href="https://wiki.archlinux.org/index.php/installation_guide">installation guide</a> are very helpful, but there are a lot of options, and I always miss something and regret it later. Here's exactly what I do to install Arch on my Late 2014 Mac Mini.</p>
 
                         <h4>Creating Installation Media</h4>
-                        <p>Download the latest Arch ISO, and use <code>dd</code> to put it on your installation media:</p>
+                        <p>Download the latest <a href="https://www.archlinux.org/download/">Arch ISO</a>, and use <code>dd</code> to put it on your installation media:</p>
                         <blockquote><code>$ dd bs=4m if=/path/to/your.iso of=/dev/sdc</code></blockquote>
 
                         <h4>Boot to the Installer Image</h4>
@@ -41,7 +41,7 @@ class WritingArchOnAMacMini extends Component {
 
 
                         <h4>Partitioning</h4>
-                        <p>I don't expect to run out of memory on this machine, so I'd rather just skip creating a swap partition. If I change my mind later, I'll just create a swap file. That just leaves a partition for <code>/</code> and a partition for <code>/boot</code>to use with <code>systemd-boot</code>.</p>
+                        <p>I don't expect to run out of memory on this machine, so I don't create a swap partition. If I change my mind later, I'll just create a swap file. That just leaves a partition for <code>/</code> and a partition for <code>/boot</code>to use with <a href="https://wiki.archlinux.org/index.php/systemd-boot">systemd-boot</a>.</p>
 
                         <p>It's worth double-checking the existing partitions with <code>lsblk</code> so you don't accidentally overwrite anything that you forgot about. Here's how my disks looked before, which makes it clear that I want to overwrite <code>/dev/sda</code>:</p>
 
@@ -103,7 +103,7 @@ Number  Start   End    Size   File system  Name  Flags
 
                         <h4>Installing</h4>
 
-                        <p>Now that we're happy with our disk partitions, let's get them ready to go. We'll mount the partitions up relative to `/mnt`, which is where we'll tell the Arch installer to put the new system.</p>
+                        <p>Now that we're happy with our disk partitions, let's get them ready to go. We'll mount the partitions up relative to <code>/mnt</code>, which is where we'll tell the Arch installer to put the new system.</p>
                         <blockquote>
                             <code>$ mount /dev/sda2 /mnt</code>
                             <br />
@@ -130,7 +130,7 @@ Number  Start   End    Size   File system  Name  Flags
                         <p>Then generate the appropriate localefiles by running</p>
                         <blockquote><code>$ locale-gen</code></blockquote>
 
-                        <p>Set that locale to be your default when you boot, and also set it for the current session:</p>
+                        <p>Make that your default when you boot, and also set it for the current session:</p>
                         <blockquote>
                             <code>$ echo LANG=en_US.UTF-8 > /etc/locale.conf</code>
                             <br />
@@ -156,7 +156,7 @@ Number  Start   End    Size   File system  Name  Flags
 ::1         localhost.localdomain   localhost   myhostname`}</pre>
                         </blockquote>
 
-                        <p>Arch has <code>dhcpcd</code> enabled by default in the install image, but it’s not intstalled by default. Better install and enable it so we can reconnect to the network later:</p>
+                        <p>Arch has <code>dhcpcd</code> enabled by default in the install image, but it’s not installed by default. Install and enable it so we can reconnect to the network later:</p>
                         <blockquote>
                             <code>$ pacman -S dhcpcd</code>
                             <br />
@@ -168,7 +168,7 @@ Number  Start   End    Size   File system  Name  Flags
 
                         <h4>Install a bootloader</h4>
 
-                        <p>Finally, install <code>systemd-boot</code> to /boot:</p>
+                        <p>Finally, install <code>systemd-boot</code> to <code>/boot</code>:</p>
                         <blockquote>
                             <code>$ pacman -S dosfstools</code>
                             <br />
@@ -181,7 +181,7 @@ linux /vmlinuz-linux
 initrd /initramfs-linux.img
 options root=/dev/sda2 rw elevator=deadline quiet splash nmi_watchdog=0`}</pre></blockquote>
 
-                        <p>And make that the default to <code>loader.conf</code>:</p>
+                        <p>And make that the default:</p>
                         <blockquote><code>$ echo "default arch" > /boot/loader/loader.conf</code></blockquote>
 
                         <p>Exit and reboot.  That's it!</p>
