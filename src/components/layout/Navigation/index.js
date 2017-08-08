@@ -25,16 +25,6 @@ class Navigation extends Component {
             <Link to="/" className="navbar-item">
               Isaac Zafuta
             </Link>
-            <a href="https://github.com/isaaczafuta" className="navbar-item is-hidden-desktop">
-              <span className="icon" style={{color: '#333'}}>
-                <i className="fa fa-github" />
-              </span>
-            </a>
-            <Link to="/login" className="navbar-item is-hidden-desktop">
-              <span className="icon" style={{color: '#333'}}>
-                <i className="fa fa-sign-in" />
-              </span>
-            </Link>
             <div className={classNames('navbar-burger', 'burger', {'is-active': this.state.navbarBurgerOpen})}
                  onClick={this.showMenu} >
               <span/>
@@ -52,12 +42,12 @@ class Navigation extends Component {
                   Writing
                 </Link>
                 <div className="navbar-dropdown is-boxed">
-                  <Link to="/writing/arch-on-macbook-pro" className="navbar-item">
+                  <Link to="/writing/arch-on-a-mac-mini" className="navbar-item">
                     <div className="navbar-content">
                       <p>
-                        <small className="has-text-info">28 Jul 2017</small>
+                        <small className="has-text-info">7 Aug 2017</small>
                       </p>
-                      <p>Installing Arch on a MacBook</p>
+                      <p>Installing Arch on a Mac Mini</p>
                     </div>
                   </Link>
                   <hr className="navbar-divider"/>

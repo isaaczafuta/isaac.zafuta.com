@@ -5,6 +5,7 @@ import { BrowserRouter, Route} from 'react-router-dom';
 import Budget from './pages/Budget';
 import Code from './pages/code';
 import PyDHT from './pages/code/PyDHT';
+import WritingArchOnAMacMini from './pages/writing/arch-on-mac-mini';
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
 
@@ -17,6 +18,7 @@ const router = (
     <Route exact path='/' component={Homepage} />
     <Route exact path='/code' component={Code} />
     <Route exact path='/code/pydht' component={PyDHT} />
+    <Route exact path='/writing/arch-on-a-mac-mini' component={WritingArchOnAMacMini} />
     <Route exact path='/login' component={Login} />
     <Route exact path='/budget' component={Budget} />
   </div>
