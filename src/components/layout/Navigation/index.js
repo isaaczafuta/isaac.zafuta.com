@@ -42,6 +42,14 @@ class Navigation extends Component {
                   Writing
                 </Link>
                 <div className="navbar-dropdown is-boxed">
+                  <Link to="/writing/installing-pacaur" className="navbar-item">
+                    <div className="navbar-content">
+                      <p>
+                        <small className="has-text-info">17 Aug 2017</small>
+                      </p>
+                      <p>Installing Pacaur</p>
+                    </div>
+                  </Link>
                   <Link to="/writing/arch-on-a-mac-mini" className="navbar-item">
                     <div className="navbar-content">
                       <p>
