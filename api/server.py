@@ -16,6 +16,8 @@ db = SQLAlchemy(app)
 
 
 class Expense(db.Model):
+    __tablename__ = 'expenses'
+
     id = db.Column(db.String(length=36), primary_key=True)
     timestamp = db.Column(db.DateTime(timezone=True), nullable=False)
     amount = db.Column(db.Integer, nullable=False)
