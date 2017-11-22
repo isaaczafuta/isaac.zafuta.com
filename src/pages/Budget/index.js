@@ -287,7 +287,7 @@ class Budget extends Component {
   render = () => {
     const numDays = moment().diff(moment("20170502", "YYYYMMDD"), 'days');
     const amounts = this.state.expenses.map((expense) => expense.amount);
-    const remainder = (6400 * numDays) - amounts.reduce(((a, b) => a + b), 0);
+    const remainder = (8300 * numDays) - amounts.reduce(((a, b) => a + b), 0);
 
     let notification = null;
     if (this.state.expenses.length > 0 && remainder < 0) {
