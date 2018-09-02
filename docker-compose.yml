@@ -2,12 +2,33 @@ version: '3'
 services:
   nginx-proxy:
     image: upstreamable/nginx-proxy:alpine
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /data/letsencrypt/certs:/etc/nginx/certs:ro
+      - /data/letsencrpt/vhost.d:/etc/nginx/vhost.d
+      - /data/letsencrypt/html:/etc/nginx/html
+  nginx-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - /data/letsencrypt/conf.d:/etc/nginx/conf.d
+      - /data/letsencrypt/vhost.d:/etc/nginx/vhost.d
+      - /data/letsencrypt/html:/usr/share/nginx/html
+      - /data/letsencrypt/certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      VIRTUAL_HOST: '${HOST:-localhost}'
+      VIRTUAL_PATH: '.well-known/acme-challenge'
   api:
     build: api
+    depends_on:
+      - postgres
     ports:
       - "5000:5000"
     environment:
@@ -23,6 +44,8 @@ services:
     environment:
       VIRTUAL_HOST: '${HOST:-localhost}'
       VIRTUAL_PATH: '/'
+      LETSENCRYPT_HOST: 'isaac.zafuta.com'
+      LETSENCRYPT_EMAIL: 'isaac@zafuta.com'
   postgres:
     image: postgres:10
     restart: always
