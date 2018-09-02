@@ -2,7 +2,6 @@
   "name": "isaac.zafuta.com",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9000",
   "devDependencies": {
     "react-scripts": "^1.0.10"
   },
@@ -18,7 +17,8 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-fontawesome": "^1.2.0",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "serve": "^10.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

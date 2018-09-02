@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:6
+FROM node:8
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -9,16 +9,16 @@ WORKDIR /usr/src/app
 RUN npm install -g yarn
 
 # Install app dependencies
-COPY package.json /usr/src/app/
+COPY package.json yarn.lock /usr/src/app/
 RUN yarn
 
 # Bundle app source
 COPY . /usr/src/app
 
 # Build and optimize react app
-RUN npm run build
+RUN yarn run build
 
-EXPOSE 9000
+EXPOSE 3000
 
 # defined in package.json
-CMD [ "npm", "run", "start:server" ]
+CMD [ "yarn", "run", "serve", "-l", "3000", "-s", "build" ]

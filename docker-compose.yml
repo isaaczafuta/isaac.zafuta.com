@@ -1,0 +1,32 @@
+version: '3'
+services:
+  nginx-proxy:
+    image: upstreamable/nginx-proxy:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  api:
+    build: api
+    ports:
+      - "5000:5000"
+    environment:
+      VIRTUAL_HOST: '${HOST:-localhost}'
+      VIRTUAL_PATH: '/api'
+      MODE: 'Development'
+      DATABASE_URL: 'postgres://postgres:${POSTGRES_PASSWORD}@postgres'
+      SECRET_KEY: '123'
+  frontend:
+    build: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      VIRTUAL_HOST: '${HOST:-localhost}'
+      VIRTUAL_PATH: '/'
+  postgres:
+    image: postgres:10
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - /data/postgres:/var/lib/postgresql/data

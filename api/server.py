@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
 app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object(f'config.{os.environ["MODE"]}')
 db = SQLAlchemy(app)
 
 
@@ -137,4 +137,5 @@ app.register_blueprint(api, url_prefix='/api')
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=9000)
+    db.create_all()
+    app.run(debug=True, port=5000, host="0.0.0.0")
