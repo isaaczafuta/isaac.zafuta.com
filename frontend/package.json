@@ -2,9 +2,7 @@
   "name": "isaac.zafuta.com",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "react-scripts": "^1.0.10"
-  },
+  "devDependencies": {},
   "dependencies": {
     "bulma": "^0.4.4",
     "classnames": "^2.2.5",
@@ -18,6 +16,7 @@
     "react-dom": "^15.3.2",
     "react-fontawesome": "^1.2.0",
     "react-router-dom": "^4.1.1",
+    "react-scripts": "^1.1.5",
     "serve": "^10.0.0"
   },
   "scripts": {
