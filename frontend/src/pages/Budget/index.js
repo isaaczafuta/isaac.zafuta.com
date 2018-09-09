@@ -331,7 +331,8 @@ class Budget extends Component {
 
           <ExpenseForm onSave={() => this.clearAndReloadExpenses()}/>
 
-          <table className="table is-striped">
+          <table className="table is-fullwidth is-striped is-hoverable">
+
             <thead>
             <tr>
               <th>Amount</th>
