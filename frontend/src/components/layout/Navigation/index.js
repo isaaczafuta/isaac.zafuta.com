@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 
 class Navigation extends Component {
@@ -26,7 +26,7 @@ class Navigation extends Component {
               Isaac Zafuta
             </Link>
             <div className={classNames('navbar-burger', 'burger', {'is-active': this.state.navbarBurgerOpen})}
-                 onClick={this.showMenu} >
+                 onClick={this.showMenu}>
               <span/>
               <span/>
               <span/>
@@ -73,7 +73,7 @@ class Navigation extends Component {
               <div className="navbar-item">
                 <div className="field is-grouped">
                   <p className="control">
-                    <Link to='/login' className="button is-primary">
+                    <Link to='/signin' className="button is-primary">
                       <span className="icon">
                         <i className="fa fa-sign-in"/>
                       </span>
