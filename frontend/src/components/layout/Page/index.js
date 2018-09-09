@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 class Page extends Component {
 
@@ -12,8 +12,10 @@ class Page extends Component {
     this.updateTitle(props.title);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.updateTitle(nextProps.title);
+  componentDidUpdate(prevProps) {
+    if (prevProps.title !== this.props.title) {
+      this.updateTitle(this.props.title);
+    }
   }
 
   updateTitle(title) {
@@ -25,7 +27,9 @@ class Page extends Component {
 
   render() {
     return (
-      <div>{this.props.children}</div>  // TODO: Get rid of this extra div with React 16
+      <React.Fragment>
+        {this.props.children}
+      </React.Fragment>
     );
   }
 }
