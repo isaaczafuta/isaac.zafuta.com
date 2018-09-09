@@ -10,7 +10,8 @@ import WritingInstallingPacaur from './pages/writing/installing-pacaur';
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
 
-import 'bulma/css/bulma.css';
+
+import "./theme.css"
 import 'font-awesome/css/font-awesome.css';
 
 const router = (

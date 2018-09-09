@@ -1,3 +1,6 @@
+# generated css files
+*.css
+
 # dependencies
 node_modules
 
