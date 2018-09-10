@@ -8,6 +8,7 @@ import {SignInPage} from "./pages/SignInPage";
 import {CurrentUserContext} from "./helpers/CurrentUserContext";
 import {BudgetPage} from "./pages/BudgetPage";
 
+import {getUser} from "./rest/auth";
 
 const PageLoader = ({active}) => (
   <div className={classNames({
@@ -26,21 +27,33 @@ class App extends React.Component {
 
     this.state = {
       checkingAuthentication: true,
-      user: null
+      user: null,
+      setUser: this.setUser
     }
   }
 
   componentDidMount = () => {
-    // TODO: Validate any cookies, if present.
-    this.setState({
-      checkingAuthentication: false,
-    });
+    getUser()
+      .then(response => this.setState({
+        checkingAuthentication: false,
+        user: response.data
+      }))
+      .catch(() => {
+        this.setState({
+          checkingAuthentication: false,
+          user: null,
+        });
+      });
+  };
+
+  setUser = (user) => {
+    this.setState({user});
   };
 
   render = () => (
     <React.Fragment>
       <PageLoader active={this.state.checkingAuthentication}/>
-      {!this.state.checkingAuthentication && <CurrentUserContext.Provider value={this.state.user}>
+      {!this.state.checkingAuthentication && <CurrentUserContext.Provider value={this.state}>
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route exact path="/signin" component={SignInPage}/>

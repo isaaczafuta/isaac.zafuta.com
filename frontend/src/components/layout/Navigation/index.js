@@ -20,7 +20,7 @@ class Navigation extends Component {
 
   render = () => (
     <CurrentUserContext.Consumer>
-      {user => (
+      {({user}) => (
         <div className="container">
           <nav className="navbar">
             <div className="navbar-brand">

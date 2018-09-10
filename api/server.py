@@ -5,7 +5,7 @@ import uuid
 
 from flask import Blueprint, Flask, jsonify, request, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import login_user, login_required, LoginManager, UserMixin
+from flask_login import current_user, login_user, logout_user, login_required, LoginManager, UserMixin
 
 from config import Config
 
@@ -63,6 +63,12 @@ def _expense_to_dict(expense):
         'timestamp': arrow.get(expense.timestamp).isoformat(),
         'amount': expense.amount,
         'notes': expense.notes,
+    }
+
+
+def _user_identity_to_dict(user_identity):
+    return {
+        'username': user_identity.username
     }
 
 
@@ -168,14 +174,15 @@ def delete_expense(expense_id):
 
 class UserIdentity(UserMixin):
 
-    def __init__(self, id):
+    def __init__(self, id, username):
         self.id = id
+        self.username = username
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = User.filter(User.id == user_id).first()
-    return UserIdentity(user.id)
+    user = User.query.filter(User.id == user_id).first()
+    return UserIdentity(id=user.id, username=user.username)
 
 
 # @api.route('/create_user', methods={'PUT'})
@@ -190,9 +197,17 @@ def load_user(user_id):
 #         'status': 'success',
 #     })
 
+@api.route('/user', methods={'GET'})
+@login_required
+def get_user():
+    return jsonify({
+        'status': 'success',
+        'data': _user_identity_to_dict(current_user)
+    })
+
 
 @api.route('/signin', methods={'POST'})
-def login():
+def signin():
     username = request.form.get('username')
     password = request.form.get('password')
 
@@ -204,8 +219,19 @@ def login():
     if not user or not user.check_password(password):
         return _unauthorized_response()
 
-    login_user(UserIdentity(user.id))
+    user_identity = UserIdentity(id=user.id, username=user.username)
 
+    login_user(user_identity, remember=True)
+
+    return jsonify({
+        'status': 'success',
+        'data': _user_identity_to_dict(user_identity)
+    })
+
+
+@api.route('/signout')
+def signout():
+    logout_user()
     return jsonify({
         'status': 'success',
     })
