@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Navigation from "../../../components/layout/Navigation";
 import Page from "../../../components/layout/Page";
 
-class PyDHT extends Component {
+class PyDHTPage extends React.Component {
 
   render() {
     return (
@@ -53,4 +53,6 @@ class PyDHT extends Component {
 
 }
 
-export default PyDHT;
+export {
+  PyDHTPage,
+};

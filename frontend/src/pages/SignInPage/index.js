@@ -1,14 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {withRouter} from 'react-router-dom';
 import classNames from 'classnames'
 
-import Navigation from '../../components/layout/Navigation';
-import Page from '../../components/layout/Page';
-
-import {authenticationContext} from "../../helpers/authenticationContext";
+import {Navigation} from '../../components/layout/Navigation';
+import {Page} from '../../components/layout/Page';
 
 
-const SignIn = withRouter(class SignIn extends Component {
+const SignInPage = withRouter(class SignIn extends React.Component {
 
   constructor(props) {
     super(props);
@@ -36,16 +34,16 @@ const SignIn = withRouter(class SignIn extends Component {
 
   _handleSubmit = async e => {
     e.target.blur();
-    this.setState({submitting: true});
-    try {
-      // await login(this.state.username, this.state.password);
-      await authenticationContext.signIn(this.state.username, this.state.password);
-      // this.props.history.push('/budget');
-    } catch (response) {
-      this.setState({
-        error: response.message
-      });
-    }
+    // this.setState({submitting: true});
+    // try {
+    //   // await login(this.state.username, this.state.password);
+    //   await authenticationContext.signIn(this.state.username, this.state.password);
+    //   // this.props.history.push('/budget');
+    // } catch (response) {
+    //   this.setState({
+    //     error: response.message
+    //   });
+    // }
   };
 
   render() {
@@ -118,5 +116,5 @@ const Icon = ({name}) => (
 );
 
 export {
-  SignIn,
+  SignInPage,
 }

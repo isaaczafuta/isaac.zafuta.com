@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
-class Page extends Component {
+class Page extends React.Component {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
@@ -34,4 +34,6 @@ class Page extends Component {
   }
 }
 
-export default Page;
+export {
+  Page,
+}

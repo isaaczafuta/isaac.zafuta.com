@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
+import {CurrentUserContext} from '../../../helpers/CurrentUserContext';
 
 class Navigation extends Component {
 
@@ -13,81 +14,93 @@ class Navigation extends Component {
     }
   };
 
-  showMenu = (element) => {
-    this.setState({navbarBurgerOpen: !this.state.navbarBurgerOpen});
+  showMenu = () => {
+    this.setState((prevState) => ({navbarBurgerOpen: !prevState.navbarBurgerOpen}));
   };
 
-  render() {
-    return (
-      <div className="container">
-        <nav className="navbar">
-          <div className="navbar-brand">
-            <Link to="/" className="navbar-item">
-              Isaac Zafuta
-            </Link>
-            <div className={classNames('navbar-burger', 'burger', {'is-active': this.state.navbarBurgerOpen})}
-                 onClick={this.showMenu}>
-              <span/>
-              <span/>
-              <span/>
-            </div>
-          </div>
-
-          <div className={classNames('navbar-menu', {'is-active': this.state.navbarBurgerOpen})}>
-            <div className="navbar-start">
-              <Link to="/" className="navbar-item">Home</Link>
-              <Link to="/code" className="navbar-item">Code</Link>
-              <div className="navbar-item has-dropdown is-hoverable">
-                <Link to="/writing" className="navbar-link">
-                  Writing
-                </Link>
-                <div className="navbar-dropdown is-boxed">
-                  <Link to="/writing/installing-pacaur" className="navbar-item">
-                    <div className="navbar-content">
-                      <p>
-                        <small className="has-text-info">17 Aug 2017</small>
-                      </p>
-                      <p>Installing Pacaur</p>
-                    </div>
-                  </Link>
-                  <Link to="/writing/arch-on-a-mac-mini" className="navbar-item">
-                    <div className="navbar-content">
-                      <p>
-                        <small className="has-text-info">7 Aug 2017</small>
-                      </p>
-                      <p>Installing Arch on a Mac Mini</p>
-                    </div>
-                  </Link>
-                  <hr className="navbar-divider"/>
-                  <Link to="/writing" className="navbar-item">
-                    More posts
-                  </Link>
-                </div>
+  render = () => (
+    <CurrentUserContext.Consumer>
+      {user => (
+        <div className="container">
+          <nav className="navbar">
+            <div className="navbar-brand">
+              <Link to="/" className="navbar-item">
+                Isaac Zafuta
+              </Link>
+              <div className={classNames('navbar-burger', 'burger', {'is-active': this.state.navbarBurgerOpen})}
+                   onClick={this.showMenu}>
+                <span/>
+                <span/>
+                <span/>
               </div>
             </div>
 
-            <div className="navbar-end">
-              <a href="https://github.com/isaaczafuta" className="navbar-item">
-                Github
-              </a>
-              <div className="navbar-item">
-                <div className="field is-grouped">
-                  <p className="control">
-                    <Link to='/signin' className="button is-primary">
-                      <span className="icon">
-                        <i className="fa fa-sign-in"/>
-                      </span>
-                      <span>Sign In</span>
+            <div className={classNames('navbar-menu', {'is-active': this.state.navbarBurgerOpen})}>
+              <div className="navbar-start">
+                <Link to="/" className="navbar-item">Home</Link>
+                <Link to="/code" className="navbar-item">Code</Link>
+                <div className="navbar-item has-dropdown is-hoverable">
+                  <Link to="/writing" className="navbar-link">
+                    Writing
+                  </Link>
+                  <div className="navbar-dropdown is-boxed">
+                    <Link to="/writing/installing-pacaur" className="navbar-item">
+                      <div className="navbar-content">
+                        <p>
+                          <small className="has-text-info">17 Aug 2017</small>
+                        </p>
+                        <p>Installing Pacaur</p>
+                      </div>
                     </Link>
-                  </p>
+                    <Link to="/writing/arch-on-a-mac-mini" className="navbar-item">
+                      <div className="navbar-content">
+                        <p>
+                          <small className="has-text-info">7 Aug 2017</small>
+                        </p>
+                        <p>Installing Arch on a Mac Mini</p>
+                      </div>
+                    </Link>
+                    <hr className="navbar-divider"/>
+                    <Link to="/writing" className="navbar-item">
+                      More posts
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className="navbar-end">
+                <a href="https://github.com/isaaczafuta" className="navbar-item">
+                  Github
+                </a>
+                <div className="navbar-item">
+                  <div className="field is-grouped">
+                    <p className="control">
+                      {user === null ?
+                        <Link to='/signin' className="button is-primary">
+                          <span className="icon">
+                            <i className="fa fa-sign-in"/>
+                          </span>
+                          <span>Sign In</span>
+                        </Link> :
+                        <Link to='/signout' className="button is-primary">
+                          <span className="icon">
+                            <i className="fa fa-sign-out"/>
+                          </span>
+                          <span>Sign Out</span>
+                        </Link>
+                      }
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </nav>
-      </div>
-    );
-  }
+          </nav>
+        </div>
+      )}
+    </CurrentUserContext.Consumer>
+  );
 }
 
-export default Navigation;
+export {
+  Navigation,
+};

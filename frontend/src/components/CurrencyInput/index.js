@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
 
-class CurrencyInput extends Component {
+class CurrencyInput extends React.Component {
 
   static propTypes = {
     onChange: PropTypes.func.isRequired,
@@ -22,9 +22,11 @@ class CurrencyInput extends Component {
     return (
       <input value={formatted}
              onChange={(e) => this.handleChange(e.target.value)}
-             {...props} />
+             {...props}/>
     );
   }
 }
 
-export default CurrencyInput;
+export {
+  CurrencyInput,
+}

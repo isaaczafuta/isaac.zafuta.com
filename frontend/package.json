@@ -5,6 +5,7 @@
   "devDependencies": {},
   "dependencies": {
     "bulma": "^0.7.0",
+    "bulma-extensions": "^3.0.0",
     "classnames": "^2.2.5",
     "express": "^4.14.0",
     "font-awesome": "^4.6.3",
@@ -22,9 +23,8 @@
     "serve": "^10.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
+    "start-js": "react-scripts start",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "yarn run build-css && node-sass-chokidar --include-path ./src/ --include-path ./node_modules src/ -o src/ --watch --recursive",
     "build-js": "react-scripts build",

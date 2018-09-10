@@ -1,14 +1,14 @@
-import classNames from 'classnames';
-import React, { Component } from 'react';
-import moment from 'moment';
-import PropTypes from 'prop-types';
+import classNames from "classnames";
+import React, { Component } from "react";
+import moment from "moment";
+import PropTypes from "prop-types";
 
-import CurrencyInput from '../../components/CurrencyInput';
-import Navigation from "../../components/layout/Navigation";
-import Page from "../../components/layout/Page";
+import {CurrencyInput} from "../../components/CurrencyInput";
+import {Navigation} from "../../components/layout/Navigation";
+import {Page} from "../../components/layout/Page";
 
 
-class ExpenseEditor extends Component {
+class ExpenseEditor extends React.Component {
   static propTypes = {
     expense: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
@@ -29,8 +29,8 @@ class ExpenseEditor extends Component {
       this.props.onClose(false);
     } else {
       const formData = new FormData();
-      formData.append('amount', this.state.amount);
-      formData.append('notes', this.state.notes);
+      formData.append("amount", this.state.amount);
+      formData.append("notes", this.state.notes);
 
       this.setState({
         submitting: true
@@ -38,7 +38,7 @@ class ExpenseEditor extends Component {
 
       const url = `/api/expense/${this.props.expense.id}`;
       fetch(url, {
-        method: 'PATCH',
+        method: "PATCH",
         body: formData
       }).then((r) => {
         this.props.onClose(true);
@@ -97,7 +97,7 @@ class ExpenseEditor extends Component {
             </div>
           </section>
           <footer className="modal-card-foot">
-            <button className={classNames('button', 'is-primary', {'is-loading': this.state.submitting})}
+            <button className={classNames("button", "is-primary", {"is-loading": this.state.submitting})}
                     onClick={() => this.saveChanges()}>Save changes</button>
             <button className="button"
                     onClick={() => this.props.onClose()}>Cancel</button>
@@ -109,7 +109,7 @@ class ExpenseEditor extends Component {
 
 }
 
-class ExpenseDeleter extends Component {
+class ExpenseDeleter extends React.Component {
   static propTypes = {
     expense: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
@@ -130,7 +130,7 @@ class ExpenseDeleter extends Component {
 
     const url = `/api/expense/${this.props.expense.id}`;
     fetch(url, {
-      method: 'DELETE',
+      method: "DELETE",
     }).then((r) => {
       this.props.onClose(true);
     });
@@ -150,7 +150,7 @@ class ExpenseDeleter extends Component {
             <p>Are you sure you want to delete <b>{this.props.expense.notes}</b>?</p>
           </section>
           <footer className="modal-card-foot">
-            <button className={classNames('button', 'is-danger', {'is-loading': this.state.submitting})}
+            <button className={classNames("button", "is-danger", {"is-loading": this.state.submitting})}
                     onClick={() => this.deleteExpense()}>Delete</button>
             <button className="button"
                     onClick={() => this.props.onClose(false)}>Cancel</button>
@@ -162,7 +162,7 @@ class ExpenseDeleter extends Component {
 
 }
 
-class ExpenseForm extends Component {
+class ExpenseForm extends React.Component {
 
   static propTypes = {
     onSave: PropTypes.func.isRequired
@@ -172,8 +172,8 @@ class ExpenseForm extends Component {
     super();
 
     this.state = {
-      amount: null,
-      notes: '',
+      amount: 0,
+      notes: "",
       submitting: false,
     }
 
@@ -189,7 +189,7 @@ class ExpenseForm extends Component {
                          type="text"
                          placeholder="Amount"
                          value={this.state.amount}
-                         onChange={(value) => this.setState({amount: value})} />
+                         onChange={amount => this.setState({amount})}/>
         </p>
         <p className="control">
           <input className="input"
@@ -201,7 +201,7 @@ class ExpenseForm extends Component {
         </p>
         <p className="control">
           <button tabIndex="3"
-                  className={classNames('button', 'is-primary', {'is-loading': this.state.submitting})}
+                  className={classNames("button", "is-primary", {"is-loading": this.state.submitting})}
                   onClick={this.saveExpense}>
             Save
           </button>
@@ -212,20 +212,20 @@ class ExpenseForm extends Component {
 
   saveExpense = () => {
     const formData = new FormData();
-    formData.append('amount', this.state.amount);
-    formData.append('notes', this.state.notes);
+    formData.append("amount", this.state.amount);
+    formData.append("notes", this.state.notes);
 
     this.setState({
       submitting: true
     });
 
-    fetch('/api/expenses', {
-      method: 'put',
+    fetch("/api/expenses", {
+      method: "put",
       body: formData
     }).then((r) => {
       this.setState({
         amount: null,
-        notes: '',
+        notes: "",
         submitting: false,
       });
       this.props.onSave();
@@ -234,7 +234,7 @@ class ExpenseForm extends Component {
 
 }
 
-class Budget extends Component {
+class BudgetPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -249,7 +249,7 @@ class Budget extends Component {
   }
 
   loadExpenses = () => {
-    fetch('/api/expenses')
+    fetch("/api/expenses")
       .then((r) => r.json())
       .then((json) => {
         json.data.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
@@ -285,7 +285,7 @@ class Budget extends Component {
   };
 
   render = () => {
-    const numDays = moment().diff(moment("20170502", "YYYYMMDD"), 'days');
+    const numDays = moment().diff(moment("20170502", "YYYYMMDD"), "days");
     const amounts = this.state.expenses.map((expense) => expense.amount);
     const remainder = (8300 * numDays) - amounts.reduce(((a, b) => a + b), 0);
 
@@ -293,7 +293,7 @@ class Budget extends Component {
     if (this.state.expenses.length > 0 && remainder < 0) {
       notification = (
         <div className="notification is-danger has-text-centered">
-          Slow down there buddy! You're over budget by ${Number(-remainder / 100).toFixed(2)}!
+          Slow down there buddy! You"re over budget by ${Number(-remainder / 100).toFixed(2)}!
         </div>
       );
     } else if (this.state.expenses.length > 0) {
@@ -346,7 +346,7 @@ class Budget extends Component {
               return (
                 <tr key={expense.id} onClick={() => this.setState({selectedExpense: expense})}>
                   <td>${Number(expense.amount / 100).toFixed(2)}</td>
-                  <td>{moment(expense.timestamp).format('lll')}</td>
+                  <td>{moment(expense.timestamp).format("lll")}</td>
                   <td>{expense.notes}</td>
                   <td>
                     <button className="delete"
@@ -363,4 +363,6 @@ class Budget extends Component {
   };
 }
 
-export default Budget;
+export {
+  BudgetPage,
+};

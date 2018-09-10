@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import './style.css';
 
-class ProjectOverview extends Component {
+class ProjectOverview extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
@@ -15,9 +15,9 @@ class ProjectOverview extends Component {
   render() {
     return (
       <div className="ProjectOverview">
-        <hr />
+        <hr/>
         <div className="container">
-          <img alt="" src={this.props.image} className="project-image" />
+          <img alt="" src={this.props.image} className="project-image"/>
           <div className="project-info">
             <p className="title">
               <Link to={this.props.link}>{this.props.title}</Link></p>
@@ -32,4 +32,6 @@ class ProjectOverview extends Component {
   }
 }
 
-export default ProjectOverview;
+export {
+  ProjectOverview,
+};
