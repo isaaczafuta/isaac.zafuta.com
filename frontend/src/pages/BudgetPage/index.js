@@ -38,6 +38,7 @@ class ExpenseEditor extends React.Component {
 
       const url = `/api/expense/${this.props.expense.id}`;
       fetch(url, {
+        credentials: 'include',
         method: "PATCH",
         body: formData
       }).then((r) => {
@@ -130,6 +131,7 @@ class ExpenseDeleter extends React.Component {
 
     const url = `/api/expense/${this.props.expense.id}`;
     fetch(url, {
+      credentials: 'include',
       method: "DELETE",
     }).then((r) => {
       this.props.onClose(true);
@@ -220,6 +222,7 @@ class ExpenseForm extends React.Component {
     });
 
     fetch("/api/expenses", {
+      credentials: 'same-origin',
       method: "put",
       body: formData
     }).then((r) => {
@@ -249,7 +252,9 @@ class BudgetPage extends React.Component {
   }
 
   loadExpenses = () => {
-    fetch("/api/expenses")
+    fetch("/api/expenses", {
+      credentials: 'same-origin',
+    })
       .then((r) => r.json())
       .then((json) => {
         json.data.sort((a, b) => b.timestamp.localeCompare(a.timestamp));

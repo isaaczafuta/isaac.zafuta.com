@@ -1,5 +1,7 @@
 const getUser = async () => {
-  const response = await fetch("/api/user");
+  const response = await fetch("/api/user", {
+    credentials: 'same-origin',
+  });
   if (!response.ok) {
     throw Error(response.status);
   } else {
@@ -12,7 +14,11 @@ const signIn = async (username, password) => {
   formData.set("username", username);
   formData.set("password", password);
 
-  const response = await fetch("/api/signin", {method: "post", body: formData});
+  const response = await fetch("/api/signin", {
+    credentials: 'same-origin',
+    method: "post",
+    body: formData
+  });
   if (!response.ok) {
     throw Error(response.status);
   } else {
