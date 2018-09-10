@@ -10,7 +10,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /data/letsencrypt/certs:/etc/nginx/certs:ro
-      - /data/letsencrpt/vhost.d:/etc/nginx/vhost.d
+      - /data/letsencrypt/vhost.d:/etc/nginx/vhost.d
       - /data/letsencrypt/html:/etc/nginx/html
   nginx-letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -34,9 +34,9 @@ services:
     environment:
       VIRTUAL_HOST: '${HOST:-localhost}'
       VIRTUAL_PATH: '/api'
-      MODE: 'Development'
+      MODE: 'Production'
       DATABASE_URL: 'postgres://postgres:${POSTGRES_PASSWORD}@postgres'
-      SECRET_KEY: '123'
+      SECRET_KEY: '${SECRET_KEY}'
   frontend:
     build: frontend
     ports:

@@ -5,7 +5,7 @@ import uuid
 
 from flask import Blueprint, Flask, jsonify, request, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import login_user, LoginManager, UserMixin
+from flask_login import login_user, login_required, LoginManager, UserMixin
 
 from config import Config
 
@@ -85,6 +85,7 @@ def _not_found_response():
 
 
 @api.route('/expenses', methods=['GET'])
+@login_required
 def get_expenses():
     expenses = Expense.query.all()
     return jsonify({
@@ -94,6 +95,7 @@ def get_expenses():
 
 
 @api.route('/expenses', methods=['PUT'])
+@login_required
 def create_expense():
     timestamp = request.form.get('timestamp')
     amount = request.form.get('amount')
@@ -123,6 +125,7 @@ def create_expense():
 
 
 @api.route('/expense/<expense_id>', methods=['PATCH'])
+@login_required
 def update_expense(expense_id):
     amount = request.form.get('amount')
     notes = request.form.get('notes')
@@ -148,6 +151,7 @@ def update_expense(expense_id):
 
 
 @api.route('/expense/<expense_id>', methods=['DELETE'])
+@login_required
 def delete_expense(expense_id):
     expense = Expense.query.filter(Expense.id == expense_id).first()
 
@@ -174,17 +178,17 @@ def load_user(user_id):
     return UserIdentity(user.id)
 
 
-@api.route('/create_user', methods={'PUT'})
-def create_user():
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    db.session.add(User(username=username, password=password))
-    db.session.commit()
-
-    return jsonify({
-        'status': 'success',
-    })
+# @api.route('/create_user', methods={'PUT'})
+# def create_user():
+#     username = request.form.get('username')
+#     password = request.form.get('password')
+#
+#     db.session.add(User(username=username, password=password))
+#     db.session.commit()
+#
+#     return jsonify({
+#         'status': 'success',
+#     })
 
 
 @api.route('/signin', methods={'POST'})
