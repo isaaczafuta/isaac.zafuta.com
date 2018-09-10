@@ -1,6 +1,7 @@
+arrow
+bcrypt
+flask-login
 Flask
 Flask-SQLAlchemy
-SQLAlchemy
 psycopg2
-arrow
-
+SQLAlchemy
