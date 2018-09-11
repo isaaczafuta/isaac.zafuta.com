@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 import {CurrentUserContext} from '../../../helpers/CurrentUserContext';
+import {signOut} from "../../../rest/auth";
 
 class Navigation extends Component {
 
@@ -18,9 +19,15 @@ class Navigation extends Component {
     this.setState((prevState) => ({navbarBurgerOpen: !prevState.navbarBurgerOpen}));
   };
 
+  _handleSignOut = (setUser, e) => {
+    e.preventDefault();
+    signOut();
+    setUser(null);
+  };
+
   render = () => (
     <CurrentUserContext.Consumer>
-      {({user}) => (
+      {({user, setUser}) => (
         <div className="container">
           <nav className="navbar">
             <div className="navbar-brand">
@@ -82,12 +89,12 @@ class Navigation extends Component {
                           </span>
                           <span>Sign In</span>
                         </Link> :
-                        <Link to='/signout' className="button is-primary">
+                        <button className="button is-primary" onClick={e => this._handleSignOut(setUser, e)}>
                           <span className="icon">
                             <i className="fa fa-sign-out"/>
                           </span>
                           <span>Sign Out</span>
-                        </Link>
+                        </button>
                       }
                     </p>
                   </div>

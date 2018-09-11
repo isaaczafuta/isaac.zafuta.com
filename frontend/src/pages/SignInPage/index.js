@@ -15,14 +15,20 @@ const SignInPage = () => (
     <h1 className="title has-text-centered">Sign In</h1>
     <CurrentUserContext.Consumer>
       {({setUser}) => (
-        <SignInBox setUser={setUser}/>
+        <div className="container is-widescreen">
+          <div className="columns">
+            <div className="column is-half is-offset-one-quarter">
+              <SignInForm setUser={setUser}/>
+            </div>
+          </div>
+        </div>
       )}
     </CurrentUserContext.Consumer>
   </Page>
 );
 
 
-const SignInBox = withRouter(class SignInBox extends React.Component {
+const SignInForm = withRouter(class SignInForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -48,14 +54,23 @@ const SignInBox = withRouter(class SignInBox extends React.Component {
     });
   };
 
-  _handleSubmit = async e => {
+  _handleSubmit = e => {
+    e.preventDefault();
+    this._submit(this.state.username, this.state.password);
+  };
+
+  _handleSignIn = e => {
     e.target.blur();
+    this._submit(this.state.username, this.state.password);
+  };
+
+  _submit = async (username, password) => {
     this.setState({
       submitting: true,
       error: null,
     });
     try {
-      const response = await signIn(this.state.username, this.state.password);
+      const response = await signIn(username, password);
       this.props.setUser(response.data);
       this.props.history.push('/');
     } catch (response) {
@@ -67,63 +82,57 @@ const SignInBox = withRouter(class SignInBox extends React.Component {
   };
 
   render = () => (
-    <div className="container is-widescreen">
-      {console.log({props: this.props, state: this.state})}
-      <div className="columns">
-        <div className="column is-half is-offset-one-quarter">
-          <div className="notification">
-            <Input label="Username"
-                   value={this.state.username}
-                   onChange={this._handleUsernameInput}
-                   icon="user"
-                   busy={this.state.submitting}/>
-            <Input label="Password"
-                   value={this.state.password}
-                   onChange={this._handlePasswordInput}
-                   type="password"
-                   icon="lock"
-                   busy={this.state.submitting}
-                   error={this.state.error}/>
-            <div className="field">
-              <div className="control">
-                <button disabled={this.state.username.length === 0 || this.state.password.length === 0}
-                        onClick={this._handleSubmit}
-                        className={classNames({
-                          'button': true,
-                          'is-fullwidth': true,
-                          'is-info': true,
-                          'is-loading': this.state.submitting,
-                        })}>
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
+    <form className="notification" onSubmit={this._handleSubmit}>
+      <Input label="Username"
+             value={this.state.username}
+             onChange={this._handleUsernameInput}
+             icon="user"
+             busy={this.state.submitting}
+             hasError={this.state.error !== null}/>
+      <Input label="Password"
+             value={this.state.password}
+             onChange={this._handlePasswordInput}
+             type="password"
+             icon="lock"
+             busy={this.state.submitting}
+             errorMessage={this.state.error}/>
+      <div className="field">
+        <div className="control">
+          <button disabled={this.state.username.length === 0 || this.state.password.length === 0}
+                  onClick={this._handleSignIn}
+                  className={classNames({
+                    'button': true,
+                    'is-fullwidth': true,
+                    'is-info': true,
+                    'is-loading': this.state.submitting,
+                  })}>
+            Sign In
+          </button>
         </div>
       </div>
-    </div>
-  )
+    </form>
+  );
 
 });
 
 
-const Input = ({label, value, onChange, type="text", icon=null, busy=false, error=null}) => (
+const Input = ({label, value, onChange, type="text", icon=null, busy=false, errorMessage=null, hasError=(!!errorMessage)}) => (
   <div className="field">
     <label className="label">{label}</label>
     <div className={classNames({
       'control': true,
       'is-loading': busy,
       'has-icons-left': icon !== null,
-      'has-icons-right': error !== null,
+      'has-icons-right': hasError,
     })}>
       <input className={classNames({
         'input': true,
-        'is-danger': error !== null,
+        'is-danger': hasError,
       })} type={type} value={value} onChange={busy ? null : onChange}/>
       {icon && <span className="icon is-small is-left"><Icon name={icon}/></span>}
-      {error && <span className="icon is-small is-right"><Icon name="exclamation-triangle"/></span>}
+      {hasError && <span className="icon is-small is-right"><Icon name="exclamation-triangle"/></span>}
     </div>
-    {error && <p className="help is-danger">{error}</p>}
+    {errorMessage && <p className="help is-danger">{errorMessage}</p>}
   </div>
 );
 
