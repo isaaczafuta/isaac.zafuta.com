@@ -185,18 +185,6 @@ def load_user(user_id):
     return UserIdentity(id=user.id, username=user.username)
 
 
-# @api.route('/create_user', methods={'PUT'})
-# def create_user():
-#     username = request.form.get('username')
-#     password = request.form.get('password')
-#
-#     db.session.add(User(username=username, password=password))
-#     db.session.commit()
-#
-#     return jsonify({
-#         'status': 'success',
-#     })
-
 @api.route('/user', methods={'GET'})
 @login_required
 def get_user():

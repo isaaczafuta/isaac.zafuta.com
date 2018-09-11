@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 
 import {HomePage} from "./pages/HomePage";
 import {SignInPage} from "./pages/SignInPage";
@@ -10,6 +10,7 @@ import {BudgetPage} from "./pages/BudgetPage";
 
 import {getUser} from "./rest/auth";
 
+
 const PageLoader = ({active}) => (
   <div className={classNames({
     "pageloader": true,
@@ -17,6 +18,21 @@ const PageLoader = ({active}) => (
   })}>
     <span className="title">Loading</span>
   </div>
+);
+
+
+const MusicPage = () => <div>Coming Soon</div>;
+const TVPage = () => <div>Coming Soon</div>;
+
+
+const AuthenticatedRoute = ({component: Component, ...rest}) => (
+  <CurrentUserContext.Consumer>
+    {({user}) => (
+      <Route {...rest} render={props => (
+        user ? <Component {...props}/> : <Redirect to="/signin"/>
+      )}/>
+    )}
+  </CurrentUserContext.Consumer>
 );
 
 
@@ -33,17 +49,22 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
-    getUser()
-      .then(response => this.setState({
+    this._componentDidMount();
+  };
+
+  _componentDidMount = async () => {
+    try {
+      const response = await getUser();
+      this.setState({
         checkingAuthentication: false,
-        user: response.data
-      }))
-      .catch(() => {
-        this.setState({
-          checkingAuthentication: false,
-          user: null,
-        });
+        user: response.data,
       });
+    } catch (e) {
+      this.setState({
+        checkingAuthentication: false,
+        user: null,
+      });
+    }
   };
 
   setUser = (user) => {
@@ -57,9 +78,9 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route exact path="/signin" component={SignInPage}/>
-          <Route exact path="/budget" component={BudgetPage}/>
-          {/*<Route path='/writing' component={WritingPage}/>*/}
-          {/*<Route path='/code' component={CodePage}/>*/}
+          <AuthenticatedRoute exact path="/apps/budget" component={BudgetPage}/>
+          <AuthenticatedRoute exact path="/apps/music" component={MusicPage}/>
+          <AuthenticatedRoute exact path="/apps/tv" component={TVPage}/>
         </Switch>
       </CurrentUserContext.Provider>
       }

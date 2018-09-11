@@ -5,6 +5,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {CurrentUserContext} from '../../../helpers/CurrentUserContext';
 import {signOut} from "../../../rest/auth";
 
+
 const Navigation = withRouter(class Navigation extends Component {
 
   constructor(props) {
@@ -76,6 +77,18 @@ const Navigation = withRouter(class Navigation extends Component {
                     <Link to="/writing" className="navbar-item">
                       More posts
                     </Link>
+                  </div>
+                </div>
+                <div className="navbar-item has-dropdown is-hoverable">
+                  <Link to="/apps" className="navbar-link">
+                    Apps
+                  </Link>
+                  <div className="navbar-dropdown is-boxed">
+                    <div className="navbar-content">
+                      <Link to="/apps/budget" className="navbar-item">Budget</Link>
+                      <Link to="/apps/music" className="navbar-item">Music</Link>
+                      <Link to="/apps/tv" className="navbar-item">TV</Link>
+                    </div>
                   </div>
                 </div>
               </div>
