@@ -229,7 +229,7 @@ def signin():
     })
 
 
-@api.route('/signout')
+@api.route('/signout', methods={'POST'})
 def signout():
     logout_user()
     return jsonify({

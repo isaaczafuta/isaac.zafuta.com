@@ -28,8 +28,11 @@ const signIn = async (username, password) => {
 };
 
 
-const signOut = () => {
-  document.cookie = 'remember_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT"';
+const signOut = async () => {
+  return await fetch("/api/signout", {
+    method: "post",
+    credentials: "same-origin",
+  });
 };
 
 

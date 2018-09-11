@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import {CurrentUserContext} from '../../../helpers/CurrentUserContext';
 import {signOut} from "../../../rest/auth";
 
-class Navigation extends Component {
+const Navigation = withRouter(class Navigation extends Component {
 
   constructor(props) {
     super(props);
@@ -19,10 +19,15 @@ class Navigation extends Component {
     this.setState((prevState) => ({navbarBurgerOpen: !prevState.navbarBurgerOpen}));
   };
 
-  _handleSignOut = (setUser, e) => {
+  _handleSignOut = async (setUser, e) => {
     e.preventDefault();
-    signOut();
-    setUser(null);
+    try {
+      await signOut();
+      setUser(null);
+      this.props.history.push('/');
+    } catch (error) {
+      // Just don't sign out.
+    }
   };
 
   render = () => (
@@ -106,7 +111,7 @@ class Navigation extends Component {
       )}
     </CurrentUserContext.Consumer>
   );
-}
+});
 
 export {
   Navigation,
