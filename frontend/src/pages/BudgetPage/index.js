@@ -298,7 +298,7 @@ class BudgetPage extends React.Component {
     if (this.state.expenses.length > 0 && remainder < 0) {
       notification = (
         <div className="notification is-danger has-text-centered">
-          Slow down there buddy! You"re over budget by ${Number(-remainder / 100).toFixed(2)}!
+          Slow down there buddy! You're over budget by ${Number(-remainder / 100).toFixed(2)}!
         </div>
       );
     } else if (this.state.expenses.length > 0) {

@@ -78,6 +78,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route exact path="/signin" component={SignInPage}/>
+          <Route exact path="/apps" component={() => <div>hi</div>} />
           <AuthenticatedRoute exact path="/apps/budget" component={BudgetPage}/>
           <AuthenticatedRoute exact path="/apps/music" component={MusicPage}/>
           <AuthenticatedRoute exact path="/apps/tv" component={TVPage}/>

@@ -34,8 +34,8 @@ const Navigation = withRouter(class Navigation extends Component {
   render = () => (
     <CurrentUserContext.Consumer>
       {({user, setUser}) => (
-        <div className="container">
-          <nav className="navbar">
+        <nav className="navbar is-primary">
+          <div className="container">
             <div className="navbar-brand">
               <Link to="/" className="navbar-item">
                 Isaac Zafuta
@@ -56,7 +56,7 @@ const Navigation = withRouter(class Navigation extends Component {
                   <Link to="/writing" className="navbar-link">
                     Writing
                   </Link>
-                  <div className="navbar-dropdown is-boxed">
+                  <div className="navbar-dropdown is-boxed is-hidden-touch">
                     <Link to="/writing/installing-pacaur" className="navbar-item">
                       <div className="navbar-content">
                         <p>
@@ -83,7 +83,7 @@ const Navigation = withRouter(class Navigation extends Component {
                   <Link to="/apps" className="navbar-link">
                     Apps
                   </Link>
-                  <div className="navbar-dropdown is-boxed">
+                  <div className="navbar-dropdown is-boxed is-hidden-touch">
                     <div className="navbar-content">
                       <Link to="/apps/budget" className="navbar-item">Budget</Link>
                       <Link to="/apps/music" className="navbar-item">Music</Link>
@@ -119,8 +119,8 @@ const Navigation = withRouter(class Navigation extends Component {
                 </div>
               </div>
             </div>
-          </nav>
-        </div>
+          </div>
+        </nav>
       )}
     </CurrentUserContext.Consumer>
   );
