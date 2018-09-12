@@ -7,6 +7,7 @@ import {Page} from '../../components/layout/Page';
 
 import {signIn} from "../../rest/auth";
 import {CurrentUserContext} from "../../helpers/CurrentUserContext";
+import {Icon} from "../../components/Icon";
 
 
 const SignInPage = () => (
@@ -134,11 +135,6 @@ const Input = ({label, value, onChange, type="text", icon=null, busy=false, erro
     </div>
     {errorMessage && <p className="help is-danger">{errorMessage}</p>}
   </div>
-);
-
-
-const Icon = ({name}) => (
-  <i className={`fa fa-${name}`}/>
 );
 
 export {

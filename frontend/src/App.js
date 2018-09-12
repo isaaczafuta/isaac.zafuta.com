@@ -7,6 +7,7 @@ import {SignInPage} from "./pages/SignInPage";
 
 import {CurrentUserContext} from "./helpers/CurrentUserContext";
 import {BudgetPage} from "./pages/BudgetPage";
+import {MusicPage} from "./pages/MusicPage";
 
 import {getUser} from "./rest/auth";
 
@@ -21,7 +22,6 @@ const PageLoader = ({active}) => (
 );
 
 
-const MusicPage = () => <div>Coming Soon</div>;
 const TVPage = () => <div>Coming Soon</div>;
 
 
