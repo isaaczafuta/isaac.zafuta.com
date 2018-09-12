@@ -12,18 +12,17 @@ import {CurrentUserContext} from "../../helpers/CurrentUserContext";
 const SignInPage = () => (
   <Page title="Sign In">
     <Navigation/>
-    <h1 className="title has-text-centered">Sign In</h1>
-    <CurrentUserContext.Consumer>
-      {({setUser}) => (
-        <div className="container is-widescreen">
-          <div className="columns">
-            <div className="column is-half is-offset-one-quarter">
+    <div className="section container is-widescreen">
+      <div className="columns">
+        <div className="column is-half is-offset-one-quarter">
+          <CurrentUserContext.Consumer>
+            {({setUser}) => (
               <SignInForm setUser={setUser}/>
-            </div>
-          </div>
+            )}
+          </CurrentUserContext.Consumer>
         </div>
-      )}
-    </CurrentUserContext.Consumer>
+      </div>
+    </div>
   </Page>
 );
 
@@ -83,6 +82,7 @@ const SignInForm = withRouter(class SignInForm extends React.Component {
 
   render = () => (
     <form className="notification" onSubmit={this._handleSubmit}>
+      <div className="is-size-3 has-text-centered">Sign In</div>
       <Input label="Username"
              value={this.state.username}
              onChange={this._handleUsernameInput}
