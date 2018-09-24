@@ -1,0 +1,28 @@
+version: '3'
+services:
+  nginx-proxy:
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    ports:
+      - "443:443"
+    volumes:
+      - /data/letsencrypt/certs:/etc/nginx/certs:ro
+      - /data/letsencrypt/vhost.d:/etc/nginx/vhost.d
+      - /data/letsencrypt/html:/etc/nginx/html
+  nginx-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - /data/letsencrypt/conf.d:/etc/nginx/conf.d
+      - /data/letsencrypt/vhost.d:/etc/nginx/vhost.d
+      - /data/letsencrypt/html:/usr/share/nginx/html
+      - /data/letsencrypt/certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      VIRTUAL_HOST: '${HOST:-localhost}'
+      VIRTUAL_PATH: '.well-known/acme-challenge'
+  frontend:
+    build: frontend
+    ports:
+      - "3000:3000"
