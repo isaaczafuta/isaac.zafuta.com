@@ -251,15 +251,25 @@ class BudgetPage extends React.Component {
     this.loadExpenses();
   }
 
-  loadExpenses = () => {
-    fetch("/api/expenses", {
+  loadExpenses = async () => {
+    const [budgets, expenses] = await Promise.all([this._loadBudgets(), this._loadExpenses()]);
+    this.setState({
+      budgets, expenses
+    });
+  };
+
+  _loadBudgets = async () => {
+    const response = await fetch("/api/budgets", {
       credentials: 'same-origin',
-    })
-      .then((r) => r.json())
-      .then((json) => {
-        json.data.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-        this.setState({expenses: json.data});
-      });
+    });
+    return (await response.json()).data;
+  };
+
+  _loadExpenses = async () => {
+    const response = await fetch("/api/expenses", {
+      credentials: 'same-origin',
+    });
+    return (await response.json()).data;
   };
 
   closeExpenseEditor = (changed) => {
@@ -289,10 +299,25 @@ class BudgetPage extends React.Component {
     this.loadExpenses();
   };
 
+  _getAmountAllowed = () => {
+    return this.state.budgets
+      .map(budget => {
+        const end = moment(budget.end_timestamp).isValid() ? moment(budget.end_timestamp) : moment();
+        const start = moment(budget.start_timestamp);
+        return budget.amount * end.diff(start, 'days');
+      })
+      .reduce(((a, b) => a + b), 0);
+  };
+
   render = () => {
-    const numDays = moment().diff(moment("20170502", "YYYYMMDD"), "days");
-    const amounts = this.state.expenses.map((expense) => expense.amount);
-    const remainder = (8300 * numDays) - amounts.reduce(((a, b) => a + b), 0);
+
+    if (!this.state.budgets) {
+      return <div/>;
+    }
+
+    const amountAllowed = this._getAmountAllowed();
+    const totalSpent = this.state.expenses.map((expense) => expense.amount).reduce(((a, b) => a + b), 0);
+    const remainder = amountAllowed - totalSpent;
 
     let notification = null;
     if (this.state.expenses.length > 0 && remainder < 0) {

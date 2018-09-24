@@ -41,6 +41,8 @@ services:
     build: frontend
     ports:
       - "3000:3000"
+#    volumes:
+#      - ./frontend:/usr/src/app
     environment:
       VIRTUAL_HOST: '${HOST:-localhost}'
       VIRTUAL_PATH: '/'

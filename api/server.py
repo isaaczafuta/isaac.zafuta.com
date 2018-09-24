@@ -53,8 +53,26 @@ class Expense(db.Model):
         self.notes = notes
 
 
+class Budgets(db.Model):
+    __tablename__ = 'budgets'
+
+    id = db.Column(db.String(length=36), primary_key=True)
+    start_timestamp = db.Column(db.DateTime(timezone=True), nullable=False)
+    end_timestamp = db.Column(db.DateTime(timezone=True))
+    amount = db.Column(db.Integer, nullable=False)
+
+
 # Define an API and register it with the app
 api = Blueprint('api', __name__)
+
+
+def _budget_to_dict(budget):
+    return {
+        'id': budget.id,
+        'start_timestamp': arrow.get(budget.start_timestamp).isoformat(),
+        'end_timestamp': arrow.get(budget.end_timestamp).isoformat() if budget.end_timestamp else None,
+        'amount': budget.amount,
+    }
 
 
 def _expense_to_dict(expense):
@@ -88,6 +106,16 @@ def _not_found_response():
     return jsonify({
         'status': 'failure'
     }), 404
+
+
+@api.route('/budgets', methods=['GET'])
+@login_required
+def get_budget():
+    budgets = Budgets.query.all()
+    return jsonify({
+        'status': 'success',
+        'data': [_budget_to_dict(budget) for budget in budgets]
+    })
 
 
 @api.route('/expenses', methods=['GET'])
