@@ -8,13 +8,11 @@ import {BudgetPage} from "./pages/BudgetPage";
 import {CodePage} from "./pages/CodePage";
 import {HomePage} from "./pages/HomePage";
 import {MusicPage} from "./pages/MusicPage";
+import {NotFoundPage} from "./pages/NotFoundPage";
 import {SignInPage} from "./pages/SignInPage";
 
 import {getUser} from "./rest/auth";
 import {PageLoader} from "./components/layout/PageLoader";
-
-
-const TVPage = () => <div>Coming Soon</div>;
 
 
 const AuthenticatedRoute = ({component: Component, ...rest}) => (
@@ -71,10 +69,9 @@ class App extends React.Component {
           <Route exact path="/" component={HomePage}/>
           <Route exact path="/signin" component={SignInPage}/>
           <Route exact path="/code" component={CodePage}/>
-          <Route exact path="/apps" component={() => <div>hi</div>} />
           <AuthenticatedRoute exact path="/apps/budget" component={BudgetPage}/>
           <AuthenticatedRoute exact path="/apps/music" component={MusicPage}/>
-          <AuthenticatedRoute exact path="/apps/tv" component={TVPage}/>
+          <Route component={NotFoundPage}/>
         </Switch>
       </CurrentUserContext.Provider>
       }
