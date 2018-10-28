@@ -13,24 +13,27 @@ import "./index.css"
 
 
 const CodePage = () => (
-  <Page title="Code">
+  <Page title="Code" description="Here's some code I've written.">
     <div className="code-page">
       <Navigation/>
       <div className="section container">
+        <h1 className="title">Code</h1>
+        <h3 className="subtitle">I wrote some code that you might find useful.</h3>
+        <hr/>
         <Project icon={pydht}
                  name="pydht"
                  description="Python implementation of the Kademlia DHT data store."
-                 link="code/pydht"
+                 link="/code/pydht"
                  github="https://github.com/isaaczafuta/pydht"/>
         <Project icon={whatapi}
                  name="whatapi"
                  description="A simple wrapper around the What.cd API. Also compatible with what-like trackers such as redacted and apollo."
-                 link="code/whatapi"
+                 link="/code/whatapi"
                  github="https://github.com/isaaczafuta/whatapi"/>
         <Project icon={pyflacmeta}
                  name="pyflacmeta"
                  description="A Pure Python3 FLAC Metadata Reader. Reads tags (vorbis comments) from FLAC files."
-                 link="code/pyflacmeta"
+                 link="/code/pyflacmeta"
                  github="https://github.com/isaaczafuta/pyflacmeta"/>
       </div>
     </div>
@@ -54,13 +57,13 @@ const Project = ({name, description, icon, link, github}) => (
         </p>
       </div>
       <div className="buttons">
-        <a className="button" href={github}>
+        <Link to={link} className="button is-info" >More Info</Link>
+        <a className="button" href={github} target="_blank" rel="noopener noreferrer">
           <span className="icon">
             <i className="fa fa-github"/>
           </span>
           <span>GitHub</span>
         </a>
-        <Link to={link} className="button is-info" >More Info</Link>
       </div>
     </div>
   </div>

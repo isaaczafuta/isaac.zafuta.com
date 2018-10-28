@@ -17,14 +17,11 @@ const NotFoundPage = () => (
           <div className="container">
             <article className="media">
               <div className="media-content">
+                <h1 className="title">You're lost!</h1>
+                <h3 className="subtitle">Looks like I can't find that page.</h3>
                 <div className="content">
-                  <h2 className="title">Looks like I can't find that page.</h2>
                   <Link to="/" className="button is-link">Return Home</Link>
                 </div>
-                <nav className="level is-mobile">
-                  <div className="level-left">
-                  </div>
-                </nav>
               </div>
               <figure className="media-right">
                 <p className="image is-128x128">

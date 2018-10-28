@@ -422,7 +422,7 @@ class BudgetPage extends React.Component {
   render = () => {
     const amountAllowed = this.state.budgets && this._getAmountAllowed(this.state.budgets);
     const totalSpent = this.state.expenses && this._getAmountSpent(this.state.expenses);
-    const budgetRemaining = amountAllowed - totalSpent;
+    const budgetRemaining = (amountAllowed && totalSpent) ? amountAllowed - totalSpent : 0;
 
     return (
       <Page title="Budget" description="A simple budget tracker.">
