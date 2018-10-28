@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React from "react";
 import {Redirect, Route, Switch} from "react-router-dom";
 
@@ -10,16 +9,7 @@ import {BudgetPage} from "./pages/BudgetPage";
 import {MusicPage} from "./pages/MusicPage";
 
 import {getUser} from "./rest/auth";
-
-
-const PageLoader = ({active}) => (
-  <div className={classNames({
-    "pageloader": true,
-    "is-active": active,
-  })}>
-    <span className="title">Loading</span>
-  </div>
-);
+import {PageLoader} from "./components/layout/PageLoader";
 
 
 const TVPage = () => <div>Coming Soon</div>;

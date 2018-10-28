@@ -1,31 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+
 class Page extends React.Component {
 
   static propTypes = {
+    loading: PropTypes.bool,
     title: PropTypes.string.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.updateTitle(props.title);
-  }
+  static defaultProps = {
+    loading: false,
+  };
 
-  componentDidUpdate(prevProps) {
+  componentDidMount = () => {
+    this._updateTitle(this.props.title);
+  };
+
+  componentDidUpdate = prevProps => {
     if (prevProps.title !== this.props.title) {
-      this.updateTitle(this.props.title);
+      this._updateTitle(this.props.title);
     }
-  }
+  };
 
-  updateTitle(title) {
+  _updateTitle = (title) => {
     const potentialTitle = `${title} · Isaac Zafuta`;
     if (document.title !== potentialTitle) {
       document.title = potentialTitle;
     }
-  }
+  };
 
-  render() {
+  render = () => {
     return (
       <React.Fragment>
         {this.props.children}
@@ -33,6 +38,7 @@ class Page extends React.Component {
     );
   }
 }
+
 
 export {
   Page,
