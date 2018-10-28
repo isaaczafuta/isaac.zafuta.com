@@ -1,12 +1,14 @@
 import React from "react";
 import {Redirect, Route, Switch} from "react-router-dom";
 
-import {HomePage} from "./pages/HomePage";
-import {SignInPage} from "./pages/SignInPage";
 
 import {CurrentUserContext} from "./helpers/CurrentUserContext";
+
 import {BudgetPage} from "./pages/BudgetPage";
+import {CodePage} from "./pages/CodePage";
+import {HomePage} from "./pages/HomePage";
 import {MusicPage} from "./pages/MusicPage";
+import {SignInPage} from "./pages/SignInPage";
 
 import {getUser} from "./rest/auth";
 import {PageLoader} from "./components/layout/PageLoader";
@@ -68,6 +70,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route exact path="/signin" component={SignInPage}/>
+          <Route exact path="/code" component={CodePage}/>
           <Route exact path="/apps" component={() => <div>hi</div>} />
           <AuthenticatedRoute exact path="/apps/budget" component={BudgetPage}/>
           <AuthenticatedRoute exact path="/apps/music" component={MusicPage}/>

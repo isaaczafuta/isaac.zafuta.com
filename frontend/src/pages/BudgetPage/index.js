@@ -114,6 +114,7 @@ class ExpenseEditor extends React.Component {
 
 }
 
+
 class ExpenseDeleter extends React.Component {
   static propTypes = {
     expense: PropTypes.object.isRequired,
@@ -165,6 +166,7 @@ class ExpenseDeleter extends React.Component {
     </div>
   );
 }
+
 
 class ExpenseForm extends React.Component {
 
@@ -268,6 +270,7 @@ class NotificationBanner extends React.Component {
   );
 
 }
+
 
 const ExpenseTable = ({expenses, onSelect, onDeletePressed}) => (
   <table className="table is-fullwidth is-striped is-hoverable">
@@ -446,6 +449,7 @@ class BudgetPage extends React.Component {
     );
   };
 }
+
 
 export {
   BudgetPage,
