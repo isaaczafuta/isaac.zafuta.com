@@ -9,7 +9,7 @@ import pyflacmeta from '../code/PyFLACMetaPage/pyflacmeta.svg';
 import whatapi from '../code/WhatAPIPage/whatapi.svg';
 
 
-import "./index.css"
+import "./index.sass"
 
 
 const CodePage = () => (

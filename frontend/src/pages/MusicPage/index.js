@@ -6,17 +6,17 @@ import {Page} from '../../components/layout/Page';
 import {Icon} from "../../components/Icon";
 
 
-import "./index.css"
+import "./index.sass"
 
 
 const NowPlaying = () => (
   <div className="controls">
     <div className="container">
       <div className="playback-controls">
-        <a className="icon"><Icon name="arrow-left"/></a>
-        <a className="icon"><Icon name="pause"/></a>
-        <a className="icon"><Icon name="arrow-right"/></a>
-        <a className="icon"><Icon name="retweet"/></a>
+        <div className="icon"><Icon name="arrow-left"/></div>
+        <div className="icon"><Icon name="pause"/></div>
+        <div className="icon"><Icon name="arrow-right"/></div>
+        <div className="icon"><Icon name="retweet"/></div>
       </div>
       <div className="track-progress">
         <div className="current-time has-text-danger is-size-7">0:14</div>
@@ -24,18 +24,19 @@ const NowPlaying = () => (
         <div className="total-time is-size-7">2:26</div>
       </div>
       <div className="track-info">
-        <a className="art-link">
+        <div className="art-link">
           <img className="art" alt="" src="https://i1.sndcdn.com/artworks-000107159263-lbbkwl-t50x50.jpg"/>
-        </a>
+        </div>
         <div className="track-artist-and-title">
           <div className="track-artist is-size-7">Seikatsu</div>
           <div className="track-title is-size-7">walk on girl</div>
         </div>
       </div>
-      <a className="icon"><Icon name="volume-up"/></a>
+      <div className="icon"><Icon name="volume-up"/></div>
     </div>
   </div>
 );
+
 
 
 const MusicPage = () => (

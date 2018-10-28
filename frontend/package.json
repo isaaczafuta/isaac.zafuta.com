@@ -20,17 +20,19 @@
     "react-dom": "^16.5.0",
     "react-fontawesome": "^1.2.0",
     "react-router-dom": "^4.1.1",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "2.0.3",
     "serve": "^10.0.0"
   },
   "scripts": {
-    "start": "./node_modules/.bin/npm-run-all -p watch-css start-js",
-    "start-js": "react-scripts start",
-    "build-css": "./node_modules/.bin/node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "yarn run build-css && ./node_modules/.bin/node-sass-chokidar --include-path ./src/ --include-path ./node_modules src/ -o src/ --watch --recursive",
-    "build-js": "./node_modules/.bin/react-scripts build",
-    "build": "./node_modules/.bin/npm-run-all build-css build-js",
+    "start": "react-scripts start",
+    "build": "./node_modules/.bin/react-scripts build",
     "test": "./node_modules/.bin/react-scripts test --env=jsdom",
     "eject": "./node_modules/.bin/react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

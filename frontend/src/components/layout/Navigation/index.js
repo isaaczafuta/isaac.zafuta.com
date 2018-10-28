@@ -5,7 +5,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {CurrentUserContext} from '../../../helpers/CurrentUserContext';
 import {signOut} from "../../../rest/auth";
 
-import "./index.css"
+import "./index.sass"
 import logo from "../../../images/logo/logo.svg";
 
 
