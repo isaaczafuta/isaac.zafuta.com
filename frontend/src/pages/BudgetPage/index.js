@@ -425,7 +425,7 @@ class BudgetPage extends React.Component {
     const budgetRemaining = amountAllowed - totalSpent;
 
     return (
-      <Page title="Budget">
+      <Page title="Budget" description="A simple budget tracker.">
         <Navigation/>
         <PageLoader active={this.state.loading}/>
         {!this.state.loading &&

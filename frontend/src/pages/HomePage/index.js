@@ -8,7 +8,7 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <Page title="Home">
+      <Page title="" description="Isaac likes to make things.">
         <Navigation/>
       </Page>
     );
