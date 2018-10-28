@@ -5,6 +5,9 @@ import {Link, withRouter} from 'react-router-dom';
 import {CurrentUserContext} from '../../../helpers/CurrentUserContext';
 import {signOut} from "../../../rest/auth";
 
+import "./index.css"
+import logo from "../../../images/logo/logo.svg";
+
 
 const Navigation = withRouter(class Navigation extends Component {
 
@@ -34,10 +37,11 @@ const Navigation = withRouter(class Navigation extends Component {
   render = () => (
     <CurrentUserContext.Consumer>
       {({user, setUser}) => (
-        <nav className="navbar is-primary">
+        <nav className="main-navigation navbar is-primary">
           <div className="container">
             <div className="navbar-brand">
               <Link to="/" className="navbar-item">
+                <img src={logo}/>
                 Isaac Zafuta
               </Link>
               <div className={classNames('navbar-burger', 'burger', {'is-active': this.state.navbarBurgerOpen})}

@@ -16,7 +16,7 @@ const CodePage = () => (
   <Page title="Code">
     <div className="code-page">
       <Navigation/>
-      <div className="section container is-widescreen">
+      <div className="section container">
         <Project icon={pydht}
                  name="pydht"
                  description="Python implementation of the Kademlia DHT data store."
