@@ -25,16 +25,16 @@ const CodePage = () => (
                  description="Python implementation of the Kademlia DHT data store."
                  link="/code/pydht"
                  github="https://github.com/isaaczafuta/pydht"/>
-        <Project icon={whatapi}
-                 name="whatapi"
-                 description="A simple wrapper around the What.cd API. Also compatible with what-like trackers such as redacted and apollo."
-                 link="/code/whatapi"
-                 github="https://github.com/isaaczafuta/whatapi"/>
         <Project icon={pyflacmeta}
                  name="pyflacmeta"
                  description="A Pure Python3 FLAC Metadata Reader. Reads tags (vorbis comments) from FLAC files."
                  link="/code/pyflacmeta"
                  github="https://github.com/isaaczafuta/pyflacmeta"/>
+        <Project icon={whatapi}
+                 name="whatapi"
+                 description="A simple python wrapper around the What.cd API. Compatible with other what-like trackers like redacted and apollo."
+                 link="/code/whatapi"
+                 github="https://github.com/isaaczafuta/whatapi"/>
       </div>
     </div>
   </Page>

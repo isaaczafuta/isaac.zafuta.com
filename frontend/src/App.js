@@ -14,6 +14,8 @@ import {SignInPage} from "./pages/SignInPage";
 import {getUser} from "./rest/auth";
 import {PageLoader} from "./components/layout/PageLoader";
 import {PyFLACMetaPage} from "./pages/code/PyFLACMetaPage";
+import {WhatAPIPage} from "./pages/code/WhatAPIPage";
+import {PyDHTPage} from "./pages/code/PyDHTPage";
 
 
 const AuthenticatedRoute = ({component: Component, ...rest}) => (
@@ -70,7 +72,9 @@ class App extends React.Component {
           <Route exact path="/" component={HomePage}/>
           <Route exact path="/signin" component={SignInPage}/>
           <Route exact path="/code" component={CodePage}/>
+          <Route exact path="/code/pydht" component={PyDHTPage}/>
           <Route exact path="/code/pyflacmeta" component={PyFLACMetaPage}/>
+          <Route exact path="/code/whatapi" component={WhatAPIPage}/>
           <AuthenticatedRoute exact path="/apps/budget" component={BudgetPage}/>
           <AuthenticatedRoute exact path="/apps/music" component={MusicPage}/>
           <Route component={NotFoundPage}/>

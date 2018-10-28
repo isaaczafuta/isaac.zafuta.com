@@ -9,7 +9,7 @@ import pyflacmeta from "./pyflacmeta.svg";
 
 const PyFLACMetaPage = () => (
   <Page title="Code">
-    <div className="code-page">
+    <div className="pyflacmeta-page">
       <Navigation/>
       <section className="section container">
         <header className="media">
