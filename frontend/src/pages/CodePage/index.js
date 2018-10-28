@@ -42,7 +42,7 @@ const Project = ({name, description, icon, link, github}) => (
   <div className="media">
     <figure className="media-left">
       <p className="image is-64x64">
-        <img src={icon}/>
+        <img alt="" src={icon}/>
       </p>
     </figure>
     <div className="media-content">

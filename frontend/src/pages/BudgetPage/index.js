@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import {CurrencyInput} from "../../components/CurrencyInput";
 import {Navigation} from "../../components/layout/Navigation";
 import {Page} from "../../components/layout/Page";
+import {PageLoader} from "../../components/layout/PageLoader";
 
 
 class ExpenseEditor extends React.Component {
@@ -333,11 +334,11 @@ class BudgetPage extends React.Component {
   _loadInitialData = async () => {
     try {
       const [budgets, expenses] = await Promise.all([this._loadBudgets(), this._loadExpenses()]);
-      this.setState({
+      window.setTimeout(() => {this.setState({
         loading: false,
         budgets,
         expenses
-      });
+      })}, 1000);
     } catch (response) {
       this.setState({
         loading: false,
@@ -419,32 +420,31 @@ class BudgetPage extends React.Component {
   };
 
   render = () => {
-    if (this.state.loading) {
-      return <div/>;
-    }
-
-    const amountAllowed = this._getAmountAllowed(this.state.budgets);
-    const totalSpent = this._getAmountSpent(this.state.expenses);
+    const amountAllowed = this.state.budgets && this._getAmountAllowed(this.state.budgets);
+    const totalSpent = this.state.expenses && this._getAmountSpent(this.state.expenses);
     const budgetRemaining = amountAllowed - totalSpent;
 
     return (
       <Page title="Budget">
         <Navigation/>
-        <div className="container section">
-          <h1 className="title has-text-centered">Budget</h1>
-          {this.state.expenseBeingDeleted && <ExpenseDeleter expense={this.state.expenseBeingDeleted}
-                                                             onDeleteConfirmed={this._handleDeleteConfirmed}
-                                                             onDeleteCanceled={this._handleDeleteCanceled}/>
-          }
-          {this.state.expenseBeingEdited && <ExpenseEditor expense={this.state.expenseBeingEdited}
-                                                           onEditConfirmed={this._handleEditedConfirmed}
-                                                           onEditCanceled={this._handleEditCanceled}/>}
-          <NotificationBanner remainder={budgetRemaining}/>
-          <ExpenseForm onSave={this._handleExpenseAdded}/>
-          <ExpenseTable expenses={this.state.expenses}
-                        onSelect={this._handleEditPressed}
-                        onDeletePressed={this._handleDeletePressed}/>
-        </div>
+        <PageLoader active={this.state.loading}/>
+        {!this.state.loading &&
+          <div className="container section">
+            <h1 className="title has-text-centered">Budget</h1>
+            {this.state.expenseBeingDeleted && <ExpenseDeleter expense={this.state.expenseBeingDeleted}
+                                                               onDeleteConfirmed={this._handleDeleteConfirmed}
+                                                               onDeleteCanceled={this._handleDeleteCanceled}/>
+            }
+            {this.state.expenseBeingEdited && <ExpenseEditor expense={this.state.expenseBeingEdited}
+                                                             onEditConfirmed={this._handleEditedConfirmed}
+                                                             onEditCanceled={this._handleEditCanceled}/>}
+            <NotificationBanner remainder={budgetRemaining}/>
+            <ExpenseForm onSave={this._handleExpenseAdded}/>
+            <ExpenseTable expenses={this.state.expenses}
+                          onSelect={this._handleEditPressed}
+                          onDeletePressed={this._handleDeletePressed}/>
+          </div>
+        }
       </Page>
     );
   };

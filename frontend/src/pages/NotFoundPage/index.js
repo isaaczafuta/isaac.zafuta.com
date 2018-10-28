@@ -18,7 +18,6 @@ const NotFoundPage = () => (
             <article className="media">
               <div className="media-content">
                 <div className="content">
-                  {/*<h1 className="title">Oh no!</h1>*/}
                   <h2 className="title">Looks like I can't find that page.</h2>
                   <Link to="/" className="button is-link">Return Home</Link>
                 </div>
@@ -29,7 +28,7 @@ const NotFoundPage = () => (
               </div>
               <figure className="media-right">
                 <p className="image is-128x128">
-                  <img className="image is-128x128" src={logo}/>
+                  <img alt="" className="image is-128x128" src={logo}/>
                 </p>
               </figure>
             </article>

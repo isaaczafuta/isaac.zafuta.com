@@ -41,7 +41,7 @@ const Navigation = withRouter(class Navigation extends Component {
           <div className="container">
             <div className="navbar-brand">
               <Link to="/" className="navbar-item">
-                <img src={logo}/>
+                <img alt="" src={logo}/>
                 Isaac Zafuta
               </Link>
               <div className={classNames('navbar-burger', 'burger', {'is-active': this.state.navbarBurgerOpen})}
