@@ -4,10 +4,10 @@ import moment from "moment";
 import 'moment-timezone';
 import PropTypes from "prop-types";
 
-import {CurrencyInput} from "../../components/CurrencyInput";
-import {Navigation} from "../../components/layout/Navigation";
-import {Page} from "../../components/layout/Page";
-import {PageLoader} from "../../components/layout/PageLoader";
+import {CurrencyInput} from "../../../components/CurrencyInput/index";
+import {Navigation} from "../../../components/layout/Navigation/index";
+import {Page} from "../../../components/layout/Page/index";
+import {PageLoader} from "../../../components/layout/PageLoader/index";
 
 
 class ExpenseEditor extends React.Component {

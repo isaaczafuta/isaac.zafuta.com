@@ -4,10 +4,11 @@ import {Redirect, Route, Switch} from "react-router-dom";
 
 import {CurrentUserContext} from "./helpers/CurrentUserContext";
 
-import {BudgetPage} from "./pages/BudgetPage";
+import {AppsPage} from "./pages/AppsPage";
+import {BudgetPage} from "./pages/apps/BudgetPage";
 import {CodePage} from "./pages/CodePage";
 import {HomePage} from "./pages/HomePage";
-import {MusicPage} from "./pages/MusicPage";
+import {MusicPage} from "./pages/apps/MusicPage";
 import {NotFoundPage} from "./pages/NotFoundPage";
 import {SignInPage} from "./pages/SignInPage";
 
@@ -75,6 +76,7 @@ class App extends React.Component {
           <Route exact path="/code/pydht" component={PyDHTPage}/>
           <Route exact path="/code/pyflacmeta" component={PyFLACMetaPage}/>
           <Route exact path="/code/whatapi" component={WhatAPIPage}/>
+          <AuthenticatedRoute exact path="/apps" component={AppsPage}/>
           <AuthenticatedRoute exact path="/apps/budget" component={BudgetPage}/>
           <AuthenticatedRoute exact path="/apps/music" component={MusicPage}/>
           <Route component={NotFoundPage}/>

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {Navigation} from '../../components/layout/Navigation';
-import {Page} from '../../components/layout/Page';
+import {Navigation} from '../../../components/layout/Navigation/index';
+import {Page} from '../../../components/layout/Page/index';
 
-import {Icon} from "../../components/Icon";
+import {Icon} from "../../../components/Icon/index";
 
 
 import "./index.sass"
