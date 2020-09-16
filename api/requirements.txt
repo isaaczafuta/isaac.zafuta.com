@@ -1,7 +1,0 @@
-arrow
-bcrypt
-flask-login
-Flask
-Flask-SQLAlchemy
-psycopg2
-SQLAlchemy
