@@ -4,15 +4,15 @@ export const params: ModelParameter[] = [];
 
 export const script = `
   function main() {
-    const plateHoleDistanceX = 149;
-    const plateHoleDistanceY = 72;
+    const plateHoleDistanceX = 146;
+    const plateHoleDistanceY = 70;
 
     const bodyHoleXOffset = 25;
-    const bodyHoleYOffset = 23;
+    const bodyHoleYOffset = 33;
 
     const plateHoleDiameter = 7;
-    const bodyMainHoleDiameter = 5;
-    const bodyOffsetHoleDiameter = 4;
+    const bodyMainHoleDiameter = 6;
+    const bodyOffsetHoleDiameter = 5;
 
     const backingPlateThickness = 1;
     const postThickness = 1;
