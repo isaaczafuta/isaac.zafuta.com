@@ -14,9 +14,9 @@ export const script = `
     const bodyMainHoleDiameter = 6;
     const bodyOffsetHoleDiameter = 5;
 
-    const backingPlateThickness = 1;
-    const postThickness = 1;
-    const postWallThickness = 3;
+    const backingPlateThickness = 3;
+    const postThickness = 3
+    const postWallThickness = 4;
 
     // Backing Plate
     const backingPlate = (() => {
