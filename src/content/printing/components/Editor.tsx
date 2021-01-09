@@ -18,8 +18,12 @@ interface NumericModelParameter {
 
 export type ModelParameter = NumericModelParameter;
 
+export interface JSCadMain {
+  (params: any): any;
+}
+
 interface Props {
-  script: string;
+  main: JSCadMain;
   modelParameters: ModelParameter[];
 }
 
@@ -41,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const downloadModel = async (script: string, params: object) => {
-  const stlBlob = await generateSTL(script, params);
+const downloadModel = async (main: JSCadMain, params: object) => {
+  const stlBlob = await generateSTL(main, params);
   saveAs(stlBlob, "thing.stl");
 };
 
-export const Editor: React.FC<Props> = ({ script, modelParameters }) => {
+export const Editor: React.FC<Props> = ({ main, modelParameters }) => {
   const classes = useStyles();
 
   const [params, setParams] = useState(() =>
@@ -57,7 +61,7 @@ export const Editor: React.FC<Props> = ({ script, modelParameters }) => {
 
   return (
     <div className={classes.expand}>
-      <Viewer script={script} params={params} />
+      <Viewer main={main} params={params} />
       <div className={classes.controls}>
         <Controls
           modelParameters={modelParameters}
@@ -68,7 +72,7 @@ export const Editor: React.FC<Props> = ({ script, modelParameters }) => {
           fullWidth
           variant="contained"
           color="primary"
-          onClick={() => downloadModel(script, params)}
+          onClick={() => downloadModel(main, params)}
         >
           Export STL File
         </Button>

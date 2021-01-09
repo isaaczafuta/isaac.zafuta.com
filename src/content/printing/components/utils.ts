@@ -1,10 +1,10 @@
 //@ts-ignore
 import * as jscad from "@jscad/openjscad";
+import { JSCadMain } from "./Editor";
 
 export const generateSTL = async (
-  script: string,
+  main: JSCadMain,
   params: object
 ): Promise<Blob> => {
-  const compiled = await jscad.compile(script, params);
-  return jscad.generateOutput("stla", compiled);
+  return jscad.generateOutput("stla", main(params));
 };

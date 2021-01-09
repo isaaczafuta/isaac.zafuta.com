@@ -2,11 +2,11 @@ import React from "react";
 import { makeStyles } from "@material-ui/core";
 
 import { Navigation, Page } from "../../../layout";
-import { Editor, ModelParameter } from "./Editor";
+import { Editor, JSCadMain, ModelParameter } from "./Editor";
 
 interface Props {
   title: string;
-  script: string;
+  main: JSCadMain;
   params: ModelParameter[];
 }
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const EditorPage: React.FC<Props> = ({ title, script, params }) => {
+export const EditorPage: React.FC<Props> = ({ title, main, params }) => {
   const classes = useStyles();
   return (
     <Page title={title}>
@@ -33,7 +33,7 @@ export const EditorPage: React.FC<Props> = ({ title, script, params }) => {
           <Navigation title={title} />
         </div>
         <div className={classes.body}>
-          <Editor script={script} modelParameters={params} />
+          <Editor main={main} modelParameters={params} />
         </div>
       </div>
     </Page>

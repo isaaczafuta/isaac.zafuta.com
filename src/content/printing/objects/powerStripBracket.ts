@@ -1,4 +1,10 @@
-import { ModelParameter } from "../components/Editor";
+import { ModelParameter, JSCadMain } from "../components/Editor";
+
+// @ts-ignore
+import * as scadApi from "@jscad/scad-api";
+const { difference, intersection, union } = scadApi.booleanOps;
+const { CAG } = scadApi.csg;
+const { linear_extrude } = scadApi.extrusions;
 
 export const params: ModelParameter[] = [
   {
@@ -51,85 +57,82 @@ export const params: ModelParameter[] = [
   },
 ];
 
-export const script = `
-  function main(params) {
-    const {
-      objectWidth,
-      objectHeight,
-      screwDiameter,
-      bracketWidth,
-      bracketThickness,
-      legLength,
-    } = params;
+export const main: JSCadMain = (params: any) => {
+  const {
+    objectWidth,
+    objectHeight,
+    screwDiameter,
+    bracketWidth,
+    bracketThickness,
+    legLength,
+  } = params;
 
-    const totalWidth = objectWidth + 2 * bracketThickness + 2 * legLength;
-    const screwOffset =
-      objectWidth / 2 + bracketThickness + legLength / 2;
+  const totalWidth = objectWidth + 2 * bracketThickness + 2 * legLength;
+  const screwOffset = objectWidth / 2 + bracketThickness + legLength / 2;
 
-    function topProfile() {
-      return difference(
-        CAG.roundedRectangle({
-          radius: [totalWidth / 2, bracketWidth / 2],
-          roundradius: 2,
-        }),
-        CAG.circle({ center: [screwOffset, 0], radius: screwDiameter / 2 }),
-        CAG.circle({ center: [-screwOffset, 0], radius: screwDiameter / 2 })
-      );
-    }
-
-    function sideProfile() {
-      return union(
-        CAG.roundedRectangle({
-          center: [0, objectHeight + bracketThickness / 2],
-          radius: [objectWidth / 2 + bracketThickness, bracketThickness / 2],
-          roundradius: 2,
-        }),
-        CAG.roundedRectangle({
-          center: [
-            objectWidth / 2 + bracketThickness / 2,
-            (objectHeight + bracketThickness) / 2,
-          ],
-          radius: [bracketThickness / 2, objectHeight / 2 + bracketThickness / 2],
-          roundradius: 2,
-        }),
-        CAG.roundedRectangle({
-          center: [
-            -objectWidth / 2 - bracketThickness / 2,
-            (objectHeight + bracketThickness) / 2,
-          ],
-          radius: [bracketThickness / 2, objectHeight / 2 + bracketThickness / 2],
-          roundradius: 2,
-        }),
-        CAG.roundedRectangle({
-          center: [
-            objectWidth / 2 + legLength / 2 + bracketThickness / 2,
-            bracketThickness / 2,
-          ],
-          radius: [legLength / 2 + bracketThickness / 2, bracketThickness / 2],
-          roundradius: 2,
-        }),
-        CAG.roundedRectangle({
-          center: [
-            -(objectWidth / 2 + legLength / 2 + bracketThickness / 2),
-            bracketThickness / 2,
-          ],
-          radius: [legLength / 2 + bracketThickness / 2, bracketThickness / 2],
-          roundradius: 2,
-        })
-      );
-    }
-
-    const verticalExtrusion = linear_extrude(
-      { height: bracketThickness + objectHeight },
-      topProfile()
+  function topProfile() {
+    return difference(
+      CAG.roundedRectangle({
+        radius: [totalWidth / 2, bracketWidth / 2],
+        roundradius: 2,
+      }),
+      CAG.circle({ center: [screwOffset, 0], radius: screwDiameter / 2 }),
+      CAG.circle({ center: [-screwOffset, 0], radius: screwDiameter / 2 })
     );
-    const horizontalExtrusion = linear_extrude(
-      { height: bracketWidth },
-      sideProfile().expand(2, 50).contract(2, 50)
-    )
-      .rotateX(90)
-      .translate([0, bracketWidth / 2, 0]);
-
-    return intersection(verticalExtrusion, horizontalExtrusion);
   }
-`;
+
+  function sideProfile() {
+    return union(
+      CAG.roundedRectangle({
+        center: [0, objectHeight + bracketThickness / 2],
+        radius: [objectWidth / 2 + bracketThickness, bracketThickness / 2],
+        roundradius: 2,
+      }),
+      CAG.roundedRectangle({
+        center: [
+          objectWidth / 2 + bracketThickness / 2,
+          (objectHeight + bracketThickness) / 2,
+        ],
+        radius: [bracketThickness / 2, objectHeight / 2 + bracketThickness / 2],
+        roundradius: 2,
+      }),
+      CAG.roundedRectangle({
+        center: [
+          -objectWidth / 2 - bracketThickness / 2,
+          (objectHeight + bracketThickness) / 2,
+        ],
+        radius: [bracketThickness / 2, objectHeight / 2 + bracketThickness / 2],
+        roundradius: 2,
+      }),
+      CAG.roundedRectangle({
+        center: [
+          objectWidth / 2 + legLength / 2 + bracketThickness / 2,
+          bracketThickness / 2,
+        ],
+        radius: [legLength / 2 + bracketThickness / 2, bracketThickness / 2],
+        roundradius: 2,
+      }),
+      CAG.roundedRectangle({
+        center: [
+          -(objectWidth / 2 + legLength / 2 + bracketThickness / 2),
+          bracketThickness / 2,
+        ],
+        radius: [legLength / 2 + bracketThickness / 2, bracketThickness / 2],
+        roundradius: 2,
+      })
+    );
+  }
+
+  const verticalExtrusion = linear_extrude(
+    { height: bracketThickness + objectHeight },
+    topProfile()
+  );
+  const horizontalExtrusion = linear_extrude(
+    { height: bracketWidth },
+    sideProfile().expand(2, 50).contract(2, 50)
+  )
+    .rotateX(90)
+    .translate([0, bracketWidth / 2, 0]);
+
+  return intersection(verticalExtrusion, horizontalExtrusion);
+};

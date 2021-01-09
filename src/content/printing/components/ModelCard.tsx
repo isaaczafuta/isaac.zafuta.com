@@ -11,13 +11,13 @@ import {
 } from "@material-ui/core";
 
 import { Viewer } from "./Viewer";
-import { ModelParameter } from "./Editor";
+import { JSCadMain, ModelParameter } from "./Editor";
 
 interface Props {
   name: string;
   description: string;
   link: string;
-  script: string;
+  main: JSCadMain;
   modelParameters: ModelParameter[];
 }
 
@@ -43,7 +43,7 @@ export const ModelCard: React.FC<Props> = ({
   name,
   description,
   link,
-  script,
+  main,
   modelParameters,
 }) => {
   const classes = useStyles();
@@ -55,7 +55,7 @@ export const ModelCard: React.FC<Props> = ({
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.cardMedia}>
-        <Viewer script={script} params={params} />
+        <Viewer main={main} params={params} />
       </CardMedia>
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom variant="h5" component="h2">

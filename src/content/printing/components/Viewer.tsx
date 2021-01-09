@@ -6,6 +6,7 @@ import { TrackballControls } from "three/examples/jsm/controls/TrackballControls
 import { generateSTL } from "./utils";
 
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
+import { JSCadMain } from "./Editor";
 
 const useStyles = makeStyles((theme) => ({
   viewer: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  script: string;
+  main: JSCadMain;
   params: object;
 }
 
@@ -86,7 +87,7 @@ const fitCameraToObject = function (
   }
 };
 
-export const Viewer: React.FC<Props> = ({ script, params }) => {
+export const Viewer: React.FC<Props> = ({ main, params }) => {
   const classes = useStyles();
 
   const viewerDiv = useRef<HTMLDivElement>(null);
@@ -155,7 +156,7 @@ export const Viewer: React.FC<Props> = ({ script, params }) => {
 
   useEffect(() => {
     const updateScene = async () => {
-      const stlBlob = await generateSTL(script, params);
+      const stlBlob = await generateSTL(main, params);
       const arrayBuffer = await blobToArrayBuffer(stlBlob);
 
       const geo2 = loader.parse(arrayBuffer);
@@ -185,7 +186,7 @@ export const Viewer: React.FC<Props> = ({ script, params }) => {
     };
 
     updateScene();
-  }, [params, script]);
+  }, [params, main]);
 
   useEffect(() => {
     const listener = () => {

@@ -42,7 +42,7 @@ export const Printing: React.FC = () => (
               name={card.name}
               description={card.description}
               link={card.link}
-              script={card.script}
+              main={card.main}
               modelParameters={card.params}
             />
           </Grid>
