@@ -4,9 +4,10 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { Home } from "./content/home/Home";
-import { Printing } from "./content/printing/pages/Printing";
-import { VespaLicensePlateHolderPage } from "./content/printing/pages/VespaLicensePlateHolderPage";
-import { PowerStripBracketPage } from "./content/printing/pages/PowerStripBracketPage";
+import {
+  Printing,
+  printingObjectPages,
+} from "./content/printing/pages/Printing";
 
 declare module "@material-ui/core/styles/createPalette" {
   interface Palette {
@@ -62,16 +63,7 @@ export const App: React.FC = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/printing" component={Printing} />
-        <Route
-          exact
-          path="/printing/bracket"
-          component={PowerStripBracketPage}
-        />
-        <Route
-          exact
-          path="/printing/vespa-plate-holder"
-          component={VespaLicensePlateHolderPage}
-        />
+        {[...printingObjectPages]}
       </Switch>
     </BrowserRouter>
   </ThemeProvider>
