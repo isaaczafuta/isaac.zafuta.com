@@ -72,7 +72,7 @@ const frontOutline = (
   frontDrop: number,
   frontDepth: number
 ) => {
-  const frontHeight = 22;
+  const frontHeight = 21;
   const gripperHeight = 1.5;
   const gripperDepth = 3;
   const gripperThickness = 1.5;
@@ -118,7 +118,7 @@ const front = (
 
   const slotDepth = 4;
 
-  const frontDrop = 50;
+  const frontDrop = 45;
   const frontDepth = 8;
 
   const body = linear_extrude(
@@ -166,7 +166,7 @@ const tray = (
   const standHeight = 20;
   const standWidth = 20;
 
-  const frontDepth = 25;
+  const frontDepth = 20;
 
   const trayBottom = cube({
     size: [trayWidth, trayDepth, frontMaterialThickness],
@@ -186,7 +186,7 @@ const tray = (
   );
 
   const tongue = cube([
-    frontHeight - 2 * slotExtraMaterial,
+    frontHeight - 2.5 * slotExtraMaterial,
     frontDepth,
     frontMaterialThickness - 2 * slotExtraMaterial,
   ]).translate([
@@ -216,7 +216,7 @@ const tray = (
 };
 
 export const main: JSCadMain = () => {
-  const frontHeight = 20;
+  const frontHeight = 40;
   const frontMaterialThickness = 7;
 
   const slotOverhang = 8;

@@ -9,6 +9,7 @@ import * as powerStripBracket from "../objects/powerStripBracket";
 import * as vespaLicensePlateHolder from "../objects/vespaLicensePlateHolder";
 import * as monitorDeviceMount from "../objects/monitorDeviceMount";
 import * as turntableLidHinge from "../objects/turntableLidHinge";
+import * as roborockMopHanger from "../objects/roborockMopHanger";
 
 import { EditorPage } from "../components/EditorPage";
 
@@ -36,6 +37,12 @@ const objectMetas = [
     name: "Turntable Lid Hinge",
     description: "Turntable Lid Hinge for Sony PS-LX300H",
     ...turntableLidHinge,
+  },
+  {
+    id: "roborock-mop-hanger",
+    name: "Roborock S6 Mop Hanger",
+    description: "Wall-mounted hanger for the Roborock S6 Mop Unit",
+    ...roborockMopHanger,
   },
 ];
 
