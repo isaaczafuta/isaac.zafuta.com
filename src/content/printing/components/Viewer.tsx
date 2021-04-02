@@ -47,14 +47,17 @@ const fitCameraToObject = function (
 ) {
   offset = offset || 1.25;
 
+  //@ts-ignore
   const boundingBox = new THREE.Box3();
 
   // get bounding box of object - this will be used to setup controls and camera
   boundingBox.setFromObject(object);
 
+  //@ts-ignore
   const center = new THREE.Vector3();
   boundingBox.getCenter(center);
 
+  //@ts-ignore
   const size = new THREE.Vector3();
 
   boundingBox.getSize(size);
@@ -92,28 +95,38 @@ export const Viewer: React.FC<Props> = ({ main, params }) => {
 
   const viewerDiv = useRef<HTMLDivElement>(null);
 
+  //@ts-ignore
   const scene = useRef<THREE.Scene | null>();
 
+  //@ts-ignore
   const camera = useRef<THREE.PerspectiveCamera | null>();
   const controls = useRef<TrackballControls | null>();
+  //@ts-ignore
   const model = useRef<THREE.Mesh | null>();
+  //@ts-ignore
   const renderer = useRef<THREE.WebGLRenderer | null>();
 
   useEffect(() => {
+    //@ts-ignore
     scene.current = new THREE.Scene();
+    //@ts-ignore
     scene.current.background = new THREE.Color(0xffffff);
 
+    //@ts-ignore
     var light = new THREE.DirectionalLight(0xffffff, 0.25);
     light.position.set(0, 0, 10);
     scene.current.add(light);
 
+    //@ts-ignore
     var light3 = new THREE.AmbientLight(0xffffff, 0.5);
     scene.current.add(light3);
 
+    //@ts-ignore
     var grid = new THREE.GridHelper(350, 20, 0xee4bb5, 0xee4bb5);
     grid.geometry.rotateX(Math.PI / 2);
     scene.current.add(grid);
 
+    //@ts-ignore
     renderer.current = new THREE.WebGLRenderer({ antialias: true });
     renderer.current.setPixelRatio(window.devicePixelRatio);
     renderer.current.setSize(
@@ -124,6 +137,7 @@ export const Viewer: React.FC<Props> = ({ main, params }) => {
 
     var aspect =
       viewerDiv.current!.clientWidth / viewerDiv.current!.clientHeight;
+    //@ts-ignore
     camera.current = new THREE.PerspectiveCamera();
     camera.current.position.z = 500;
     camera.current.aspect = aspect;
@@ -160,11 +174,13 @@ export const Viewer: React.FC<Props> = ({ main, params }) => {
       const arrayBuffer = await blobToArrayBuffer(stlBlob);
 
       const geo2 = loader.parse(arrayBuffer);
+      //@ts-ignore
       var material2 = new THREE.MeshPhongMaterial({
         color: 0x3cb5ff,
         specular: 0x080808,
         shininess: 200,
       });
+      //@ts-ignore
       var mesh2 = new THREE.Mesh(geo2, material2);
 
       mesh2.position.set(0, 0, 0);

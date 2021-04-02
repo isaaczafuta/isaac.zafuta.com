@@ -10,6 +10,8 @@ import * as vespaLicensePlateHolder from "../objects/vespaLicensePlateHolder";
 import * as monitorDeviceMount from "../objects/monitorDeviceMount";
 import * as turntableLidHinge from "../objects/turntableLidHinge";
 import * as roborockMopHanger from "../objects/roborockMopHanger";
+import * as phoneTray from "../objects/phoneTray";
+import * as barClamp from "../objects/barClamp";
 
 import { EditorPage } from "../components/EditorPage";
 
@@ -43,6 +45,18 @@ const objectMetas = [
     name: "Roborock S6 Mop Hanger",
     description: "Wall-mounted hanger for the Roborock S6 Mop Unit",
     ...roborockMopHanger,
+  },
+  {
+    id: "phone-tray",
+    name: "Phone Tray",
+    description: "A simple phone tray to mount to other pieces",
+    ...phoneTray,
+  },
+  {
+    id: "bar-clamp",
+    name: "Bike Handlebar Clamp",
+    description: "Attach something to a rod",
+    ...barClamp,
   },
 ];
 
@@ -78,6 +92,7 @@ export const Printing: React.FC = () => (
 export const printingObjectPages = objectMetas.map((objectMeta) => (
   <Route
     exact
+    key={objectMeta.id}
     path={`/printing/${objectMeta.id}`}
     component={() => (
       <EditorPage
