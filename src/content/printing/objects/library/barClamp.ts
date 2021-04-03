@@ -29,7 +29,7 @@ const barClamp = (options: BarClampOptions) => {
     radius: barRadius,
   });
 
-  const screwFlangeRadius = 6;
+  const screwFlangeRadius = 5;
 
   const holeZ = -outerRadius - screwFlangeRadius;
   const screwFlangeWidth = 2 * materialThickness + gap;

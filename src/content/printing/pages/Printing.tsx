@@ -10,7 +10,7 @@ import * as vespaLicensePlateHolder from "../objects/vespaLicensePlateHolder";
 import * as monitorDeviceMount from "../objects/monitorDeviceMount";
 import * as turntableLidHinge from "../objects/turntableLidHinge";
 import * as roborockMopHanger from "../objects/roborockMopHanger";
-import * as phoneTray from "../objects/phoneTray";
+import * as bikePhoneTray from "../objects/bikePhoneTray";
 import * as barClamp from "../objects/barClamp";
 
 import { EditorPage } from "../components/EditorPage";
@@ -47,10 +47,10 @@ const objectMetas = [
     ...roborockMopHanger,
   },
   {
-    id: "phone-tray",
-    name: "Phone Tray",
-    description: "A simple phone tray to mount to other pieces",
-    ...phoneTray,
+    id: "bike-phone-tray",
+    name: "Bike Phone Tray",
+    description: "A simple phone mount for attaching my phone to my bike",
+    ...bikePhoneTray,
   },
   {
     id: "bar-clamp",
